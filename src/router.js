@@ -3,6 +3,7 @@ import HomePage from "./components/HomePage";
 import ProductsItem from "./components/ProductsItem";
 import ProductsList from "./components/ProductsList";
 import AddProduct from "./components/AddProduct";
+import LoginPage from "./components/LoginPage";
 
 export default new Router({
   mode: "history",
@@ -25,6 +26,11 @@ export default new Router({
       path: "/add",
       name: "add",
       component: AddProduct,
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: LoginPage,
     },
   ],
 });

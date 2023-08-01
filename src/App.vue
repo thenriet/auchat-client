@@ -17,7 +17,7 @@
       </div>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/" class="nav-link"
+          <router-link to="/login" class="nav-link"
             >Se connecter<img
               class="icone"
               alt="connexion icone"
