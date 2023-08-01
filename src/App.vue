@@ -28,6 +28,10 @@
     </nav>
     <HomePage></HomePage>
     <!-- <ProductsList></ProductsList> -->
+    <footer class="footer">
+      <li class="footer-item">Icônes : Freepik, Flaticon</li>
+      <li class="footer-item">Fait par Ondine et Thomas</li>
+    </footer>
   </div>
 </template>
 
@@ -61,7 +65,17 @@ export default {
   position: fixed;
   box-shadow: 1px 1px 15px 0 rgba(0, 0, 0, 0.12);
   display: flex;
-  justify-content: column;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.footer-item {
+  list-style: none;
 }
 
 #app {
