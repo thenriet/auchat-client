@@ -1,4 +1,5 @@
 import Router from "vue-router";
+import HomePage from "./components/HomePage";
 import ProductsItem from "./components/ProductsItem";
 import ProductsList from "./components/ProductsList";
 import AddProduct from "./components/AddProduct";
@@ -8,6 +9,10 @@ export default new Router({
   routes: [
     {
       path: "/",
+      component: HomePage,
+    }
+    {
+      path: "/products",
       alias: "/products",
       name: "products",
       component: ProductsList,
