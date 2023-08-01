@@ -13,13 +13,11 @@
 </template>
 
 <script>
-import ProductsList from "../components/ProductsList.vue";
+import ProductsList from "./ProductsList.vue";
 
 export default {
   name: "HomePage",
-  components: {
-    ProductsList,
-  },
+  components: { ProductsList },
 };
 </script>
 
