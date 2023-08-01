@@ -10,10 +10,9 @@ export default new Router({
     {
       path: "/",
       component: HomePage,
-    }
+    },
     {
       path: "/products",
-      alias: "/products",
       name: "products",
       component: ProductsList,
     },

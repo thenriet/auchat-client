@@ -10,7 +10,7 @@
       >
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/products" class="nav-link"
+          <router-link to="/products/" class="nav-link"
             >Tous nos produits</router-link
           >
         </li>
@@ -38,9 +38,7 @@
 <script>
 export default {
   name: "App",
-  components: {
-  },
-
+  components: {},
 };
 </script>
 
