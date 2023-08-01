@@ -1,6 +1,6 @@
 import Router from "vue-router";
-import ProductsItem from "./components/ProductsItem";
 import ProductsList from "./components/ProductsList";
+import ProductsItem from "./components/ProductsItem";
 import AddProduct from "./components/AddProduct";
 
 export default new Router({
