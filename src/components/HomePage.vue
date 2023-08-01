@@ -16,6 +16,7 @@
 import ProductsList from "../components/ProductsList.vue";
 
 export default {
+  name: "HomePage",
   components: {
     ProductsList,
   },

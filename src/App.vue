@@ -26,7 +26,7 @@
         </li>
       </div>
     </nav>
-    <HomePage></HomePage>
+    <router-view></router-view>
     <!-- <ProductsList></ProductsList> -->
     <footer class="footer">
       <li class="footer-item">Icônes : Freepik, Flaticon</li>
@@ -36,13 +36,13 @@
 </template>
 
 <script>
-import HomePage from "./components/HomePage.vue";
+// import HomePage from "./components/HomePage.vue";
 // import ProductsList from "./components/ProductsList.vue";
 
 export default {
   name: "App",
   components: {
-    HomePage,
+    // HomePage,
     // ProductsList,
   },
 };
