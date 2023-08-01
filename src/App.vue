@@ -36,15 +36,11 @@
 </template>
 
 <script>
-// import HomePage from "./components/HomePage.vue";
-// import ProductsList from "./components/ProductsList.vue";
-
 export default {
   name: "App",
   components: {
-    // HomePage,
-    // ProductsList,
   },
+
 };
 </script>
 
