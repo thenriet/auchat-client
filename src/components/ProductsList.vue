@@ -2,26 +2,28 @@
   <div>
     <li v-for="(product, index) in products" :key="index">
       {{ product.title }}
+      <router-link :to="`/products/${product._id}`">About</router-link>
     </li>
   </div>
 </template>
 <script>
 import ProductsDataService from "../services/ProductsDataService";
+
 export default {
   data: () => {
     return { products: [] };
   },
   mounted: function () {
     this.getProducts();
+    console.log(this.$route);
   },
   methods: {
     getProducts: async function () {
-      // let result = await axios.get(`${process.env.VUE_APP_APIURL}`);
       let res = await ProductsDataService.getAll();
-      console.log(res);
       this.products = res.data.data;
     },
   },
+  components: {},
 };
 </script>
 <style lang=""></style>

@@ -1,7 +1,7 @@
-import Vue from "vue";
 import Router from "vue-router";
-
-Vue.use(Router);
+import ProductsItem from "./components/ProductsItem";
+import ProductsList from "./components/ProductsList";
+import AddProduct from "./components/AddProduct";
 
 export default new Router({
   mode: "history",
@@ -10,17 +10,17 @@ export default new Router({
       path: "/",
       alias: "/products",
       name: "products",
-      component: () => import("./components/ProductsList"),
+      component: ProductsList,
     },
     {
       path: "/products/:id",
-      name: "products-details",
-      component: () => import("./components/ProductItem"),
+      name: "products-item",
+      component: ProductsItem,
     },
     {
       path: "/add",
       name: "add",
-      component: () => import("./components/AddProduct"),
+      component: AddProduct,
     },
   ],
 });
