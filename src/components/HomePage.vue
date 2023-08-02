@@ -27,8 +27,8 @@ export default {
   },
   async created() {
     this.username = this.$store.getters.getUser.name;
+    console.log(this.$store.getters.getUser.name);
   },
-
 };
 </script>
 

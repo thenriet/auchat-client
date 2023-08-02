@@ -10,7 +10,11 @@ class ProductsDataService {
   }
 
   create(data) {
-    return http.post("/products", data);
+    return http.post("/products", data, {
+      headers: {
+        authorization: "Bearer " + this.$store.getters.isLoggedIn,
+      },
+    });
   }
 
   update(id, data) {

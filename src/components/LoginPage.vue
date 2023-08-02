@@ -47,13 +47,14 @@ export default {
           email: this.email,
           password: this.password,
         };
+        console.log(credentials);
         const response = await AuthService.login(credentials);
         console.log(response);
         const token = response.token;
         const user = response.user;
 
         this.$store.dispatch("login", { token, user });
-        this.$router.push("/");
+        // this.$router.push("/");
       } catch (error) {
         console.log(error.response.data);
         this.msg = error.response.data.error;

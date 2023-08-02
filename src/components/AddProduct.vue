@@ -85,7 +85,8 @@
 </template>
 
 <script>
-import ProductsDataService from "../services/ProductsDataService";
+// import ProductsDataService from "../services/ProductsDataService";
+import axios from "axios";
 
 export default {
   name: "AddProduct",
@@ -98,20 +99,37 @@ export default {
       selectedCategory: null,
     };
   },
+  created() {
+    console.log(this.$store.getters.isLoggedIn);
+  },
   methods: {
     createJson() {
-      let data = {
-        title: this.formTitle,
-        description: this.formDescription,
-        price: this.formPrice,
-        weight: this.formWeight,
-        category: this.selectedCategory,
-      };
+      let dataArray = [
+        ["title", this.formTitle],
+        ["description", this.formPrice],
+        ["price", this.formPrice],
+        ["weight", this.formWeight],
+        ["category", this.selectedCategory],
+      ];
+      console.log(dataArray);
+      const data = JSON.stringify(Object.fromEntries(dataArray));
+      console.log(data);
       this.createProduct(data);
     },
     createProduct: async function (data) {
       try {
-        await ProductsDataService.create(data);
+        console.log(data);
+        axios.post(
+          "http://localhost:8080/api/v1/products",
+          { data },
+          {
+            headers: {
+              authorization: "Bearer " + this.$store.getters.isLoggedIn,
+            },
+          }
+        );
+        // const req = await ProductsDataService.create(data);
+        // console.log(req);
       } catch (err) {
         console.log(err);
       }
