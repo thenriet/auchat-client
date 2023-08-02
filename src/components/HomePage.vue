@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import ProductsList from "../components/ProductsList.vue";
+import ProductsList from "./ProductsList.vue";
 
 export default {
   name: "HomePage",
@@ -28,6 +28,7 @@ export default {
   async created() {
     this.username = this.$store.getters.getUser.name;
   },
+
 };
 </script>
 
