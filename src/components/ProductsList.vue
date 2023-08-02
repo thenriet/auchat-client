@@ -1,11 +1,11 @@
 <template lang="">
-  <div class="d-flex justify-content-center flex-wrap">
+  <div class="d-flex justify-content-center flex-wrap list-container">
     <div v-for="(product, index) in products" :key="index">
-      <div class="card m-3" style="width: 18rem">
+      <div class="card m-3 shadow-sm" style="width: 18rem">
         <img
           :src="product.picture"
           class="card-img-top"
-          style="max-height: 10rem"
+          style="height: 13rem"
           alt=""
         />
         <div class="card-body">
@@ -46,5 +46,13 @@ export default {
 a {
   text-decoration: none !important;
   color: white !important;
+}
+
+.btn-primary {
+  background-color: #ffae8b !important;
+}
+
+.list-container {
+  background-color: #f8f8f8;
 }
 </style>
