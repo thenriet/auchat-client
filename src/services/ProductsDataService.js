@@ -5,6 +5,10 @@ class ProductsDataService {
     return http.get("/products");
   }
 
+  getAllToys() {
+    return http.get("/products?category=toys");
+  }
+
   get(id) {
     return http.get(`/products/${id}`);
   }
