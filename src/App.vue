@@ -16,9 +16,18 @@
         </li>
       </div>
       <div class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <li class="nav-item" v-if="!this.$store.getters.isLoggedIn">
           <router-link to="/login" class="nav-link"
             >Se connecter<img
+              class="icone"
+              alt="connexion icone"
+              src="./assets/connexion.png"
+          /></router-link>
+        </li>
+        <li class="nav-logged-in" v-if="this.$store.getters.isLoggedIn">
+          {{ username }}
+          <router-link to="/" class="nav-link">
+            <img
               class="icone"
               alt="connexion icone"
               src="./assets/connexion.png"
@@ -36,9 +45,20 @@
 </template>
 
 <script>
+// import AuthService from "./services/AuthService";
+
 export default {
   name: "App",
+  data() {
+    return {
+      username: "",
+    };
+  },
   components: {},
+  async created() {
+    this.username = this.$store.getters.getUser.name;
+    // console.log(this.$store.getters.isLoggedIn);
+  },
 };
 </script>
 
@@ -61,6 +81,11 @@ export default {
   display: flex;
 }
 
+.nav-logged-in {
+  display: flex;
+  align-items: center;
+}
+
 .footer {
   display: flex;
   justify-content: space-between;
@@ -78,6 +103,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #f8f8f8;
   /* margin-top: 60px; */
 }
 </style>

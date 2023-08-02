@@ -2,7 +2,7 @@
   <div>
     <div class="main-image">
       <div class="main-card">
-        <h1>Bienvenue</h1>
+        <h1>Bienvenue {{ username }}</h1>
         <router-link to="/products"
           ><button class="main-btn">Voir le catalogue</button></router-link
         >
@@ -17,8 +17,16 @@ import ProductsList from "../components/ProductsList.vue";
 
 export default {
   name: "HomePage",
+  data() {
+    return {
+      username: "",
+    };
+  },
   components: {
     ProductsList,
+  },
+  async created() {
+    this.username = this.$store.getters.getUser.name;
   },
 };
 </script>
