@@ -8,31 +8,79 @@
         >
       </div>
     </div>
-    <ProductsList></ProductsList>
+    <div class="cards-home">
+      <div class="card-home-left"><h2>Jouets</h2></div>
+      <div class="card-home-right" style="width: 18rem">
+        <h2>Accessoires</h2>
+      </div>
+      <div class="card-home-left"><h2>Hygiène</h2></div>
+    </div>
+    <h3>Les jouets</h3>
+    <div class="d-flex justify-content-center flex-wrap">
+      <div v-for="(toy, index) in toys" :key="index">
+        <div class="card m-3" style="width: 18rem">
+          <router-link :to="`/products/${toy._id}`">
+            <img
+              :src="toy.picture"
+              class="card-img-top"
+              style="max-height: 10rem"
+              alt=""
+            />
+
+            <div class="card-body">
+              <h5 class="card-title">{{ toy.title }}</h5>
+              <p class="card-text">
+                {{ toy.description }}
+              </p>
+              <p class="card-text">{{ toy.price }} euros</p>
+            </div>
+          </router-link>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import ProductsList from "./ProductsList.vue";
+import ProductsDataService from "../services/ProductsDataService";
 
 export default {
   name: "HomePage",
   data() {
     return {
       username: "",
+      toys: [],
     };
   },
-  components: {
-    ProductsList,
-  },
+  components: {},
   async created() {
-    this.username = this.$store.getters.getUser.name;
+    if (this.$store.getters.isLoggedIn) {
+      this.username = this.$store.getters.getUser.name;
+    }
   },
-
+  mounted: function () {
+    this.getToys();
+    console.log(this.$route);
+  },
+  methods: {
+    getToys: async function () {
+      let res = await ProductsDataService.getAllToys();
+      this.toys = res.data.data;
+    },
+  },
 };
 </script>
 
 <style>
+a {
+  color: #2c3e50;
+  text-decoration: none;
+}
+h2 {
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 25px !important;
+}
 .main-btn {
   background-color: #ffae8b;
   border-radius: 24px;
@@ -63,5 +111,27 @@ export default {
   background-size: cover;
   background-position: center;
   height: 400px;
+}
+
+.cards-home {
+  display: flex;
+  justify-content: center;
+  margin: 35px;
+}
+
+.card-home-left {
+  width: 20rem;
+  padding: 48px;
+  border-radius: 16px;
+  background-color: #f9ad88;
+  margin: 10px;
+}
+
+.card-home-right {
+  width: 20rem;
+  padding: 48px;
+  border-radius: 16px;
+  background-color: #d9ddce;
+  margin: 10px;
 }
 </style>

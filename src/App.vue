@@ -26,12 +26,12 @@
         </li>
         <li class="nav-logged-in" v-if="this.$store.getters.isLoggedIn">
           {{ username }}
-          <router-link to="/" class="nav-link">
-            <img
-              class="icone"
-              alt="connexion icone"
-              src="./assets/connexion.png"
-          /></router-link>
+          <img
+            class="icone-deco"
+            alt="connexion icone"
+            src="./assets/deconnexion.png"
+            @click="logout"
+          />
         </li>
       </div>
     </nav>
@@ -59,6 +59,11 @@ export default {
     this.username = this.$store.getters.getUser.name;
     // console.log(this.$store.getters.isLoggedIn);
   },
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+    },
+  },
 };
 </script>
 
@@ -71,6 +76,12 @@ export default {
 .icone {
   width: 30px;
   margin-left: 10px;
+}
+
+.icone-deco {
+  width: 30px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .navbar {
