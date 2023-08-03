@@ -10,6 +10,7 @@
           class="form-control"
           id="title"
           placeholder="Nom du produit"
+          required
         />
       </div>
       <div class="mb-3">
@@ -23,6 +24,7 @@
           id="description"
           rows="3"
           placeholder="Description détaillée du produit"
+          required
         ></textarea>
       </div>
       <div class="mb-3">
@@ -33,6 +35,7 @@
           class="form-control"
           id="price"
           placeholder="Prix du produit"
+          required
         />
       </div>
       <div class="mb-3">
@@ -45,6 +48,8 @@
           class="form-control"
           id="weight"
           placeholder="Poids du produit"
+          oninput="this.value = this.valueAsNumber"
+          required
         />
       </div>
       <div class="mb-3">
@@ -56,8 +61,8 @@
           name="categories"
           id="FormControlCategory"
           class="form-control"
+          required
         >
-          <option value="">Choisir une catégorie</option>
           <option value="toys">Jouet</option>
           <option value="food">Nourriture</option>
           <option value="accessories">Accessoires</option>
@@ -68,19 +73,20 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input type="text" class="form-control" id="image" />
       </div>
-      <button @click="createData" type="submit" class="btn btn-primary">
+      <button @click="checkForm" type="submit" class="btn btn-primary">
         Submit
       </button>
     </form>
-    <div class="test">
-      <ul>
-        <li>{{ formTitle }}</li>
-        <li>{{ formDescription }}</li>
-        <li>{{ formPrice }}</li>
-        <li>{{ formWeight }}</li>
-        <li>{{ selectedCategory }}</li>
-      </ul>
-    </div>
+    <div class="m-3 text-danger">
+        <p v-if="errors.length">
+          <b>Veuillez corriger une ou plusieurs erreurs :</b>
+          <ul>
+            <li v-for="(error, index) in errors" :key=index>
+           {{ error }}
+            </li>
+          </ul>
+        </p>
+      </div>
   </div>
 </template>
 
@@ -98,9 +104,46 @@ export default {
       selectedCategory: null,
       token: this.$store.getters.isLoggedIn,
       data: [],
+      errors: [],
     };
   },
   methods: {
+    checkForm: function (e) {
+      if (
+        this.formTitle &&
+        this.formDescription &&
+        this.formPrice &&
+        this.formWeight &&
+        this.selectedCategory
+        && (this.formTitle.match(/^[a-zA-Z]+$/))
+      )  {
+        this.createData();
+      }
+
+      this.errors = [];
+
+      if (!this.formTitle)
+        this.errors.push("Un titre est requis.");
+     
+      if (!(this.formTitle.match(/^[a-zA-Z]+$/))) this.errors.push("Le titre ne doit pas contenir de numéros ni de caractères spéciaux.")
+
+      if (!this.formDescription) 
+        this.errors.push("Une description est requise.");
+
+      if (!(this.formDescription.match(/^[a-zA-Z]+$/))) this.errors.push("La description ne doit pas contenir de numéros ni de caractères spéciaux.")
+      
+      if (!this.formPrice) 
+        this.errors.push("Un prix est requis.");
+      
+      if (!this.formWeight) 
+        this.errors.push("Un poids est requis.");
+      
+      if (!this.selectedCategory) 
+        this.errors.push("Une catégorie est requise.");
+      
+
+      e.preventDefault();
+    },
     createData() {
       this.data.push(
         this.formTitle,
