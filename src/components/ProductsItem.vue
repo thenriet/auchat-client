@@ -45,7 +45,6 @@
 </template>
 <script>
 import ProductsDataService from "@/services/ProductsDataService";
-import axios from "axios";
 
 export default {
   name: "productsItem",
