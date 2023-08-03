@@ -15,6 +15,15 @@
           >
         </li>
       </div>
+
+      <div class="navbar-nav mr-auto" v-if="getRole === 'admin'">
+        <li class="nav-item">
+          <router-link to="/add/" class="nav-link"
+            >Créer un produit</router-link
+          >
+        </li>
+      </div>
+
       <div class="navbar-nav mr-auto">
         <li class="nav-item" v-if="!this.$store.getters.isLoggedIn">
           <router-link to="/login" class="nav-link"
@@ -56,8 +65,13 @@ export default {
   },
   components: {},
   async created() {
+    console.log(this.$store.getters.getUser.role);
     this.username = this.$store.getters.getUser.name;
-    // console.log(this.$store.getters.isLoggedIn);
+  },
+  computed: {
+    getRole() {
+      return this.$store.getters.getUser.role;
+    },
   },
   methods: {
     logout() {
