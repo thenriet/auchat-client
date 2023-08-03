@@ -14,7 +14,7 @@
             {{ product.description }}
           </p>
           <p class="card-text">{{ product.price }} euros</p>
-          <button class="btn btn-primary" type="button">
+          <button class="btn-card" type="button">
             <router-link :to="`/products/${product._id}`">Détails</router-link>
           </button>
         </div>
@@ -48,8 +48,16 @@ a {
   color: white !important;
 }
 
-.btn-primary {
+.btn-card {
   background-color: #ffae8b !important;
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white;
+  border: none;
 }
 
 .list-container {

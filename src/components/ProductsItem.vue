@@ -14,7 +14,7 @@
         </p>
         <p class="card-text">{{ currentProduct.price }} euros</p>
         <p class="card-text">{{ currentProduct.weight }} kg</p>
-        <a href="#" class="btn btn-primary">Ajouter au panier</a>
+        <a href="#" class="btn-card">Ajouter au panier</a>
       </div>
     </div>
   </div>
@@ -43,7 +43,19 @@ export default {
 };
 </script>
 <style>
-.btn-primary {
-  background-color: #ffae8b !important;
+.card {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
+  border: none !important;
+  border-radius: 16px !important;
+}
+.btn-card {
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white;
+  border: none;
 }
 </style>
