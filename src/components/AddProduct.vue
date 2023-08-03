@@ -158,6 +158,7 @@ export default {
     createProduct: async function (data, token) {
       try {
         await ProductsDataService.create(data, token);
+        this.$router.push("/products/");
       } catch (err) {
         console.log(err);
       }
