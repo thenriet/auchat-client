@@ -69,12 +69,15 @@ export default {
   },
   computed: {
     getRole() {
-      return this.$store.getters.getUser.role;
+      return this.$store.getters.getRole;
     },
   },
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      if (this.$route.name !== "home") {
+        this.$router.push("/");
+      }
     },
   },
 };

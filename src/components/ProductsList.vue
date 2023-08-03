@@ -31,7 +31,6 @@ export default {
   },
   mounted: function () {
     this.getProducts();
-    console.log(this.$route);
   },
   methods: {
     getProducts: async function () {
