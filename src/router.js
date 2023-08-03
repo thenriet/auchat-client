@@ -4,12 +4,14 @@ import ProductsItem from "./components/ProductsItem";
 import ProductsList from "./components/ProductsList";
 import AddProduct from "./components/AddProduct";
 import LoginPage from "./components/LoginPage";
+import Store from "./store";
 
 export default new Router({
   mode: "history",
   routes: [
     {
       path: "/",
+      name: "home",
       component: HomePage,
     },
     {
@@ -26,6 +28,11 @@ export default new Router({
       path: "/add",
       name: "add",
       component: AddProduct,
+      beforeEnter: (to, from, next) => {
+        if (Store.getters.getRole !== "admin") {
+          next("/login");
+        } else next();
+      },
     },
     {
       path: "/login",

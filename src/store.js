@@ -20,6 +20,9 @@ export default new Vuex.Store({
     getUser: (state) => {
       return state.user;
     },
+    getRole: (state) => {
+      return state.user.role;
+    },
   },
   mutations: {
     SET_TOKEN: (state, token) => {
