@@ -45,7 +45,6 @@
 </template>
 <script>
 import ProductsDataService from "@/services/ProductsDataService";
-import axios from "axios";
 
 export default {
   name: "productsItem",
@@ -53,6 +52,7 @@ export default {
     return {
       currentProduct: this.getProductAsync(this.$route.params.id),
       role: null,
+      token: this.$store.getters.isLoggedIn,
     };
   },
   async created() {
@@ -79,13 +79,8 @@ export default {
     deleteProduct: async function (id) {
       try {
         id = this.currentProduct._id;
-        await axios.delete(`http://localhost:8080/api/v1/products/${id}`, {
-          headers: {
-            authorization: "Bearer " + this.$store.getters.isLoggedIn,
-          },
-        });
+        await ProductsDataService.delete(id, this.token);
         this.$router.push("/products");
-        console.log("produit supprimé");
       } catch (err) {
         console.log(err);
       }
@@ -106,7 +101,7 @@ export default {
   padding-bottom: 12px;
   padding-left: 28px;
   padding-right: 28px;
-  color: white;
+  color: white !important;
   border: none;
   text-decoration: none;
 }

@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style>
-a {
+.card a {
   color: #2c3e50;
   text-decoration: none;
 }

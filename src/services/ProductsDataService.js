@@ -1,4 +1,3 @@
-import { AxiosHeaders } from "axios";
 import http from "../http-common";
 
 class ProductsDataService {
@@ -36,10 +35,10 @@ class ProductsDataService {
     return http.put(`/products/${id}`, data);
   }
 
-  delete(id) {
+  delete(id, token) {
     return http.delete(`/products/${id}`, {
       headers: {
-        authorization: "Bearer " + this.$store.getters.isLoggedIn,
+        authorization: "Bearer " + token,
       },
     });
   }
