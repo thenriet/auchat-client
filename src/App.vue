@@ -65,7 +65,6 @@ export default {
   },
   components: {},
   async created() {
-    console.log(this.$store.getters.getUser.role);
     this.username = this.$store.getters.getUser.name;
   },
   computed: {

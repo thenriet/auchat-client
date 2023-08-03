@@ -2,7 +2,7 @@
   <div>
     <div class="main-image">
       <div class="main-card">
-        <h1>Bienvenue {{ username }}</h1>
+        <h1>Bienvenue {{ getUsername }}</h1>
         <router-link to="/products"
           ><button class="main-btn">Voir le catalogue</button></router-link
         >
@@ -48,19 +48,17 @@ export default {
   name: "HomePage",
   data() {
     return {
-      username: "",
       toys: [],
     };
   },
   components: {},
-  async created() {
-    if (this.$store.getters.isLoggedIn) {
-      this.username = this.$store.getters.getUser.name;
-    }
-  },
   mounted: function () {
     this.getToys();
-    console.log(this.$route);
+  },
+  computed: {
+    getUsername() {
+      return this.$store.getters.getUser.name;
+    },
   },
   methods: {
     getToys: async function () {
