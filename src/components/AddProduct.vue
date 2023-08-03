@@ -68,7 +68,7 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input type="text" class="form-control" id="image" />
       </div>
-      <button @click="createJson" type="submit" class="btn btn-primary">
+      <button @click="createData" type="submit" class="btn btn-primary">
         Submit
       </button>
     </form>
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import ProductsDataService from "../services/ProductsDataService";
+import ProductsDataService from "@/services/ProductsDataService";
 
 export default {
   name: "AddProduct",
@@ -96,22 +96,25 @@ export default {
       formPrice: null,
       formWeight: null,
       selectedCategory: null,
+      token: this.$store.getters.isLoggedIn,
+      data: [],
     };
   },
   methods: {
-    createJson() {
-      let data = {
-        title: this.formTitle,
-        description: this.formDescription,
-        price: this.formPrice,
-        weight: this.formWeight,
-        category: this.selectedCategory,
-      };
-      this.createProduct(data);
+    createData() {
+      this.data.push(
+        this.formTitle,
+        this.formDescription,
+        this.formPrice,
+        this.formWeight,
+        this.selectedCategory
+      );
+      this.createProduct(this.data, this.token);
+      this.data = [];
     },
-    createProduct: async function (data) {
+    createProduct: async function (data, token) {
       try {
-        await ProductsDataService.create(data);
+        await ProductsDataService.create(data, token);
       } catch (err) {
         console.log(err);
       }
