@@ -101,7 +101,7 @@ export default {
   padding-bottom: 12px;
   padding-left: 28px;
   padding-right: 28px;
-  color: white;
+  color: white !important;
   border: none;
   text-decoration: none;
 }
