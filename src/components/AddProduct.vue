@@ -68,7 +68,7 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input type="text" class="form-control" id="image" />
       </div>
-      <button @click="createJson" type="submit" class="btn btn-primary">
+      <button @click="createData" type="submit" class="btn btn-primary">
         Submit
       </button>
     </form>
@@ -85,8 +85,7 @@
 </template>
 
 <script>
-// import ProductsDataService from "../services/ProductsDataService";
-import axios from "axios";
+import ProductsDataService from "@/services/ProductsDataService";
 
 export default {
   name: "AddProduct",
@@ -97,39 +96,25 @@ export default {
       formPrice: null,
       formWeight: null,
       selectedCategory: null,
+      token: this.$store.getters.isLoggedIn,
+      data: [],
     };
   },
-  created() {
-    console.log(this.$store.getters.isLoggedIn);
-  },
   methods: {
-    createJson() {
-      let dataArray = [
-        ["title", this.formTitle],
-        ["description", this.formPrice],
-        ["price", this.formPrice],
-        ["weight", this.formWeight],
-        ["category", this.selectedCategory],
-      ];
-      console.log(dataArray);
-      const data = JSON.stringify(Object.fromEntries(dataArray));
-      console.log(data);
-      this.createProduct(data);
+    createData() {
+      this.data.push(
+        this.formTitle,
+        this.formDescription,
+        this.formPrice,
+        this.formWeight,
+        this.selectedCategory
+      );
+      this.createProduct(this.data, this.token);
+      this.data = [];
     },
-    createProduct: async function (data) {
+    createProduct: async function (data, token) {
       try {
-        console.log(data);
-        axios.post(
-          "http://localhost:8080/api/v1/products",
-          { data },
-          {
-            headers: {
-              authorization: "Bearer " + this.$store.getters.isLoggedIn,
-            },
-          }
-        );
-        // const req = await ProductsDataService.create(data);
-        // console.log(req);
+        await ProductsDataService.create(data, token);
       } catch (err) {
         console.log(err);
       }

@@ -13,12 +13,22 @@ class ProductsDataService {
     return http.get(`/products/${id}`);
   }
 
-  create(data) {
-    return http.post("/products", data, {
-      headers: {
-        authorization: "Bearer " + this.$store.getters.isLoggedIn,
+  create(data, token) {
+    return http.post(
+      "/products",
+      {
+        title: data[0],
+        description: data[1],
+        price: data[2],
+        weight: data[3],
+        category: data[4],
       },
-    });
+      {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      }
+    );
   }
 
   update(id, data) {
