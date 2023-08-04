@@ -3,6 +3,14 @@
     <div v-for="(product, index) in products" :key="index">
       <div class="card m-3 shadow-sm" style="width: 18rem">
         <img
+          v-if="product.picture.includes(product._id)"
+          :src="'http://localhost:8080/uploads/' + product.picture"
+          class="card-img-top"
+          style="height: 13rem"
+          alt=""
+        />
+        <img
+          v-else
           :src="product.picture"
           class="card-img-top"
           style="height: 13rem"
@@ -27,9 +35,12 @@ import ProductsDataService from "../services/ProductsDataService";
 
 export default {
   data: () => {
-    return { products: [] };
+    return { products: [], picture: null, product: null };
   },
   mounted: function () {
+    this.getProducts();
+  },
+  updated: function () {
     this.getProducts();
   },
   methods: {

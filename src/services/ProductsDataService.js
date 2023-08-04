@@ -14,17 +14,17 @@ class ProductsDataService {
   }
 
   create(data, token) {
+    // for (let [name, value] of data) {
+    //   console.log(`${name} = ${value}`);
+    // }
     return http.post(
       "/products",
       {
-        title: data[0],
-        description: data[1],
-        price: data[2],
-        weight: data[3],
-        category: data[4],
+        data: data,
       },
       {
         headers: {
+          "Content-Type": "multipart/form-data",
           authorization: "Bearer " + token,
         },
       }

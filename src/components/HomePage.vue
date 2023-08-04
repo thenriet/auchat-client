@@ -19,22 +19,29 @@
     <div class="d-flex justify-content-center flex-wrap">
       <div v-for="(toy, index) in toys" :key="index">
         <div class="card m-3" style="width: 18rem">
-          <img
-            :src="toy.picture"
-            class="card-img-top"
-            style="max-height: 10rem"
-            alt=""
-          />
-
-          <div class="card-body">
-            <h5 class="card-title">{{ toy.title }}</h5>
-            <p class="card-text">{{ toy.price }} euros</p>
-          </div>
-          <div class="card-btn">
-            <button class="btn-main">
-              <router-link :to="`/products/${toy._id}`">Voir</router-link>
-            </button>
-          </div>
+          <router-link :to="`/products/${toy._id}`">
+            <img
+              v-if="toy.picture.includes(toy._id)"
+              :src="'http://localhost:8080/uploads/' + toy.picture"
+              class="card-img-top"
+              style="max-height: 10rem"
+              alt=""
+            />
+            <img
+              v-else
+              :src="toy.picture"
+              class="card-img-top"
+              style="height: 13rem"
+              alt=""
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ toy.title }}</h5>
+              <p class="card-text">
+                {{ toy.description }}
+              </p>
+              <p class="card-text">{{ toy.price }} euros</p>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template lang="">
   <div class="container mt-3 w-50">
     <h1>Créer un nouveau produit</h1>
-    <form action="" v-on:submit.prevent>
+    <form  v-on:submit.prevent>
       <div class="mb-3">
         <label for="FormControlTitle" class="form-label">Nom du produit</label>
         <input
@@ -71,7 +71,7 @@
       </div>
       <div class="mb-3">
         <label for="FormControlPicture" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" />
+        <input ref="picture" @change="selectFile" type="file"  class="form-control">      
       </div>
       <button @click="checkForm" type="submit" class="btn-main">
         Valider
@@ -91,7 +91,8 @@
 </template>
 
 <script>
-import ProductsDataService from "@/services/ProductsDataService";
+// import ProductsDataService from "@/services/ProductsDataService";
+import axios from "axios";
 
 export default {
   name: "AddProduct",
@@ -105,9 +106,17 @@ export default {
       token: this.$store.getters.isLoggedIn,
       data: [],
       errors: [],
+      picture: "",
     };
   },
   methods: {
+    selectFile() {
+      this.picture = this.$refs.picture.files[0]
+    },
+    createFile() {
+      const formData = new FormData();
+      console.log(formData.append('picture', this.picture)) 
+    },
     checkForm: function (e) {
       if (
         this.formTitle &&
@@ -115,56 +124,64 @@ export default {
         this.formPrice &&
         this.formWeight &&
         this.selectedCategory &&
-        this.formTitle.match(/^[a-zA-Z]+$/)
+        this.picture 
+        && (this.formTitle.match(/^[a-zA-Z ]+$/)) && (this.formDescription.match(/^[a-zA-Z ]+$/))
       ) {
         this.createData();
       }
 
       this.errors = [];
 
-      if (!this.formTitle) this.errors.push("Un titre est requis.");
-
-      if (!this.formTitle.match(/^[a-zA-Z]+$/))
-        this.errors.push(
-          "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
-        );
+      if (!this.formTitle)
+        this.errors.push("Un titre est requis.");
+     
+      if (!(this.formTitle.match(/^[a-zA-Z ]+$/))) this.errors.push("Le titre ne doit pas contenir de numéros ni de caractères spéciaux.")
 
       if (!this.formDescription)
         this.errors.push("Une description est requise.");
 
-      if (!this.formDescription.match(/^[a-zA-Z]+$/))
-        this.errors.push(
-          "La description ne doit pas contenir de numéros ni de caractères spéciaux."
-        );
-
-      if (!this.formPrice) this.errors.push("Un prix est requis.");
-
-      if (!this.formWeight) this.errors.push("Un poids est requis.");
-
-      if (!this.selectedCategory)
+      if (!(this.formDescription.match(/^[a-zA-Z ]+$/))) this.errors.push("La description ne doit pas contenir de numéros ni de caractères spéciaux.")
+      
+      if (!this.formPrice) 
+        this.errors.push("Un prix est requis.");
+      
+      if (!this.formWeight) 
+        this.errors.push("Un poids est requis.");
+      
+      if (!this.selectedCategory) 
         this.errors.push("Une catégorie est requise.");
+
+        if (!this.picture) 
+        this.errors.push("Une image est requise.");
+
 
       e.preventDefault();
     },
     createData() {
-      this.data.push(
-        this.formTitle,
-        this.formDescription,
-        this.formPrice,
-        this.formWeight,
-        this.selectedCategory
-      );
-      this.createProduct(this.data, this.token);
-      this.data = [];
-    },
-    createProduct: async function (data, token) {
-      try {
-        await ProductsDataService.create(data, token);
-        this.$router.push("/products/");
-      } catch (err) {
-        console.log(err);
-      }
-    },
+      const formData = new FormData();
+      formData.append('title', this.formTitle);
+      formData.append('description', this.formDescription);
+      formData.append('price', this.formPrice);
+      formData.append('weight', this.formWeight);
+      formData.append('category', this.selectedCategory);
+      formData.append('picture', this.picture, 'picture.jpg');
+
+      axios({
+      method: "post",
+      url: "http://localhost:8080/api/v1/products/",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data", authorization: "Bearer " + this.token, },
+      })
+      this.$router.push("/products/");
+    }
+    // createProduct: async function (data, token) {
+    //   try {
+    //     await ProductsDataService.createWithPicture(data, token);
+    //     this.$router.push("/products/");
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // },
   },
 };
 </script>
