@@ -73,8 +73,8 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input type="text" class="form-control" id="image" />
       </div>
-      <button @click="checkForm" type="submit" class="btn-card">
-        Submit
+      <button @click="checkForm" type="submit" class="btn-main">
+        Valider
       </button>
     </form>
     <div class="m-3 text-danger">
