@@ -1,15 +1,15 @@
 <template lang="">
   <div class="container mt-3 w-50">
-    <h1>Créer un nouveau produit</h1>
+    <h1>Modifier le produit</h1>
     <form action="" v-on:submit.prevent>
       <div class="mb-3">
         <label for="FormControlTitle" class="form-label">Nom du produit</label>
         <input
-          v-model="formTitle"
+          
           type="text"
           class="form-control"
           id="title"
-          placeholder="Nom du produit"
+          v-model="currentProduct.title"
           required
         />
       </div>
@@ -19,22 +19,22 @@
         >
         <textarea
           style="white-space: pre-line"
-          v-model="formDescription"
+          
           class="form-control"
           id="description"
           rows="3"
-          placeholder="Description détaillée du produit"
+          v-model ="currentProduct.description"
           required
         ></textarea>
       </div>
       <div class="mb-3">
         <label for="FormControlPrice" class="form-label">Prix du produit</label>
         <input
-          v-model.number="formPrice"
+          
           type="number"
           class="form-control"
           id="price"
-          placeholder="Prix du produit"
+          v-model="currentProduct.price"
           required
         />
       </div>
@@ -43,11 +43,11 @@
           >Poids du produit</label
         >
         <input
-          v-model.number="formWeight"
+          
           type="number"
           class="form-control"
           id="weight"
-          placeholder="Poids du produit"
+           v-model="currentProduct.weight"
           oninput="this.value = this.valueAsNumber"
           required
         />
@@ -57,7 +57,7 @@
           >Catégorie du produit</label
         >
         <select
-          v-model="selectedCategory"
+          v-model="currentProduct.category"
           name="categories"
           id="FormControlCategory"
           class="form-control"
@@ -73,20 +73,10 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input type="text" class="form-control" id="image" />
       </div>
-      <button @click="checkForm" type="submit" class="btn-card">
-        Submit
-      </button>
+      <a class="btn-main" @click="checkForm" type="submit">
+        Valider
+      </a>
     </form>
-    <div class="m-3 text-danger">
-        <p v-if="errors.length">
-          <b>Veuillez corriger une ou plusieurs erreurs :</b>
-          <ul>
-            <li v-for="(error, index) in errors" :key=index>
-           {{ error }}
-            </li>
-          </ul>
-        </p>
-      </div>
   </div>
 </template>
 
@@ -94,72 +84,58 @@
 import ProductsDataService from "@/services/ProductsDataService";
 
 export default {
-  name: "AddProduct",
+  name: "UpdateProduct",
   data() {
     return {
-      formTitle: "",
-      formDescription: "",
-      formPrice: null,
-      formWeight: null,
-      selectedCategory: null,
+      currentProduct: this.getProductAsync(this.$route.params.id),
+      //   selectedCategory: null,
       token: this.$store.getters.isLoggedIn,
       data: [],
-      errors: [],
     };
   },
   methods: {
-    checkForm: function (e) {
-      if (
-        this.formTitle &&
-        this.formDescription &&
-        this.formPrice &&
-        this.formWeight &&
-        this.selectedCategory &&
-        this.formTitle.match(/^[a-zA-Z]+$/)
-      ) {
-        this.createData();
+    getProductAsync: async function (id) {
+      try {
+        let res = await ProductsDataService.get(id);
+        let resJson = JSON.parse(JSON.stringify(res.data));
+        this.currentProduct = resJson.data;
+        // console.log(this.currentProduct);
+      } catch (err) {
+        console.log(err);
       }
-
-      this.errors = [];
-
-      if (!this.formTitle) this.errors.push("Un titre est requis.");
-
-      if (!this.formTitle.match(/^[a-zA-Z]+$/))
-        this.errors.push(
-          "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
-        );
-
-      if (!this.formDescription)
-        this.errors.push("Une description est requise.");
-
-      if (!this.formDescription.match(/^[a-zA-Z]+$/))
-        this.errors.push(
-          "La description ne doit pas contenir de numéros ni de caractères spéciaux."
-        );
-
-      if (!this.formPrice) this.errors.push("Un prix est requis.");
-
-      if (!this.formWeight) this.errors.push("Un poids est requis.");
-
-      if (!this.selectedCategory)
-        this.errors.push("Une catégorie est requise.");
-
-      e.preventDefault();
+    },
+    checkForm: function () {
+      try {
+        if (
+          this.currentProduct.title &&
+          this.currentProduct.description &&
+          this.currentProduct.price &&
+          this.currentProduct.weight &&
+          this.currentProduct.category &&
+          this.currentProduct.title.match(/[a-zA-Z]+\s/)
+        ) {
+          this.createData();
+          console.log("data reçu");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     },
     createData() {
       this.data.push(
-        this.formTitle,
-        this.formDescription,
-        this.formPrice,
-        this.formWeight,
-        this.selectedCategory
+        this.currentProduct.title,
+        this.currentProduct.description,
+        this.currentProduct.price,
+        this.currentProduct.weight,
+        this.currentProduct.category
       );
-      this.createProduct(this.data, this.token);
+      console.log(this.token);
+      this.updateProduct(this.currentProduct._id, this.data, this.token);
       this.data = [];
     },
-    createProduct: async function (data, token) {
+    updateProduct: async function (id, data, token) {
       try {
-        await ProductsDataService.create(data, token);
+        await ProductsDataService.update(id, data, token);
         this.$router.push("/products/");
       } catch (err) {
         console.log(err);

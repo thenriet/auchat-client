@@ -4,6 +4,7 @@ import ProductsItem from "./components/ProductsItem";
 import ProductsList from "./components/ProductsList";
 import AddProduct from "./components/AddProduct";
 import LoginPage from "./components/LoginPage";
+import UpdateProduct from "./components/UpdateProduct";
 import Store from "./store";
 
 export default new Router({
@@ -33,6 +34,11 @@ export default new Router({
           next("/login");
         } else next();
       },
+    },
+    {
+      path: "/update/:id",
+      name: "update-product",
+      component: UpdateProduct,
     },
     {
       path: "/login",

@@ -17,7 +17,7 @@
         />
         <div>
           <input
-            class="form-btn"
+            class="btn-main"
             type="button"
             @click="login"
             value="Valider"
@@ -88,18 +88,5 @@ form {
   border: 1px solid grey;
   padding: 8px;
   background-color: #f8f8f8;
-}
-
-.form-btn {
-  margin-top: 20px;
-  background-color: #ffae8b;
-  border-radius: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 28px;
-  padding-right: 28px;
-  color: white;
-  border: none;
-  max-width: fit-content;
 }
 </style>
