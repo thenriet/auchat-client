@@ -106,6 +106,11 @@ export default {
   position: fixed;
   box-shadow: 1px 1px 15px 0 rgba(0, 0, 0, 0.12);
   display: flex;
+  background-color: white;
+}
+
+.navbar a {
+  color: #2c3e50 !important;
 }
 
 .nav-logged-in {
@@ -132,5 +137,17 @@ export default {
   color: #2c3e50;
   background-color: #f8f8f8;
   /* margin-top: 60px; */
+}
+
+.btn-main {
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
 }
 </style>

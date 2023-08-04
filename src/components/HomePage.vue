@@ -4,7 +4,7 @@
       <div class="main-card">
         <h1>Bienvenue {{ getUsername }}</h1>
         <router-link to="/products"
-          ><button class="main-btn">Voir le catalogue</button></router-link
+          ><button class="btn-main">Voir le catalogue</button></router-link
         >
       </div>
     </div>
@@ -19,22 +19,22 @@
     <div class="d-flex justify-content-center flex-wrap">
       <div v-for="(toy, index) in toys" :key="index">
         <div class="card m-3" style="width: 18rem">
-          <router-link :to="`/products/${toy._id}`">
-            <img
-              :src="toy.picture"
-              class="card-img-top"
-              style="max-height: 10rem"
-              alt=""
-            />
+          <img
+            :src="toy.picture"
+            class="card-img-top"
+            style="max-height: 10rem"
+            alt=""
+          />
 
-            <div class="card-body">
-              <h5 class="card-title">{{ toy.title }}</h5>
-              <p class="card-text">
-                {{ toy.description }}
-              </p>
-              <p class="card-text">{{ toy.price }} euros</p>
-            </div>
-          </router-link>
+          <div class="card-body">
+            <h5 class="card-title">{{ toy.title }}</h5>
+            <p class="card-text">{{ toy.price }} euros</p>
+          </div>
+          <div class="card-btn">
+            <button class="btn-main">
+              <router-link :to="`/products/${toy._id}`">Voir</router-link>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -70,25 +70,16 @@ export default {
 </script>
 
 <style>
-.card a {
-  color: #2c3e50;
-  text-decoration: none;
+.card-btn {
+  margin-bottom: 20px;
 }
+
 h2 {
   color: white !important;
   font-weight: 600 !important;
   font-size: 25px !important;
 }
-.main-btn {
-  background-color: #ffae8b;
-  border-radius: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 28px;
-  padding-right: 28px;
-  color: white;
-  border: none;
-}
+
 .main-card h1 {
   align-self: center;
 }

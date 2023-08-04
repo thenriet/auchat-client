@@ -31,8 +31,22 @@ class ProductsDataService {
     );
   }
 
-  update(id, data) {
-    return http.put(`/products/${id}`, data);
+  update(id, data, token) {
+    return http.put(
+      `/products/${id}`,
+      {
+        title: data[0],
+        description: data[1],
+        price: data[2],
+        weight: data[3],
+        category: data[4],
+      },
+      {
+        headers: {
+          authorization: "Bearer " + token,
+        },
+      }
+    );
   }
 
   delete(id, token) {

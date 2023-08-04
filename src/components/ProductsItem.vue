@@ -14,11 +14,18 @@
         </p>
         <p class="card-text">{{ currentProduct.price }} euros</p>
         <p class="card-text">{{ currentProduct.weight }} kg</p>
-        <a href="#" class="btn-card">Ajouter au panier</a>
+        <a href="#" class="btn-main">Ajouter au panier</a>
         <div class="card-admin" v-if="role">
-          <a href="#" class="btn-card" @click="showModal"
+          <a href="#" class="btn-main" @click="showModal"
             >Supprimer le produit</a
           >
+          <div class="card-modif">
+            <a href="#" class="btn-main" type="button">
+              <router-link :to="`/update/${currentProduct._id}`"
+                >Modifier le produit
+              </router-link>
+            </a>
+          </div>
           <b-modal
             ref="my-modal"
             hide-footer
@@ -94,21 +101,18 @@ export default {
   border: none !important;
   border-radius: 16px !important;
 }
-.btn-card {
-  background-color: #ffae8b;
-  border-radius: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 28px;
-  padding-right: 28px;
-  color: white !important;
-  border: none;
-  text-decoration: none;
-}
 
 .card-admin {
   margin-top: 30px;
   margin-bottom: 20px;
+}
+
+.card-modif {
+  margin: 20px;
+}
+
+.card-modif a {
+  color: white !important;
 }
 
 .btn-modal {
