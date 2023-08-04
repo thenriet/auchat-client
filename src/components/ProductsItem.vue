@@ -2,9 +2,17 @@
   <div class="container d-flex justify-content-center">
     <div class="card m-3 shadow-sm" style="width: 18rem">
       <img
-        :src="currentProduct.picture"
+        v-if="currentProduct.picture.includes(currentProduct._id)"
+        :src="'http://localhost:8080/uploads/' + currentProduct.picture"
         class="card-img-top"
         style="max-height: 15rem"
+        alt=""
+      />
+      <img
+        v-else
+        :src="currentProduct.picture"
+        class="card-img-top"
+        style="height: 13rem"
         alt=""
       />
       <div class="card-body">
