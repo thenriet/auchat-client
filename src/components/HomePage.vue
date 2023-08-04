@@ -4,7 +4,7 @@
       <div class="main-card">
         <h1>Bienvenue {{ getUsername }}</h1>
         <router-link to="/products"
-          ><button class="main-btn">Voir le catalogue</button></router-link
+          ><button class="btn-main">Voir le catalogue</button></router-link
         >
       </div>
     </div>
@@ -77,25 +77,16 @@ export default {
 </script>
 
 <style>
-.card a {
-  color: #2c3e50;
-  text-decoration: none;
+.card-btn {
+  margin-bottom: 20px;
 }
+
 h2 {
   color: white !important;
   font-weight: 600 !important;
   font-size: 25px !important;
 }
-.main-btn {
-  background-color: #ffae8b;
-  border-radius: 24px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 28px;
-  padding-right: 28px;
-  color: white;
-  border: none;
-}
+
 .main-card h1 {
   align-self: center;
 }

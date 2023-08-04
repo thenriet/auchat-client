@@ -73,8 +73,8 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input ref="picture" @change="selectFile" type="file"  class="form-control">      
       </div>
-      <button @click="checkForm" type="submit" class="btn btn-primary">
-        Submit
+      <button @click="checkForm" type="submit" class="btn-main">
+        Valider
       </button>
     </form>
     <div class="m-3 text-danger">
@@ -126,7 +126,7 @@ export default {
         this.selectedCategory &&
         this.picture 
         && (this.formTitle.match(/^[a-zA-Z ]+$/)) && (this.formDescription.match(/^[a-zA-Z ]+$/))
-      )  {
+      ) {
         this.createData();
       }
 
@@ -137,7 +137,7 @@ export default {
      
       if (!(this.formTitle.match(/^[a-zA-Z ]+$/))) this.errors.push("Le titre ne doit pas contenir de numéros ni de caractères spéciaux.")
 
-      if (!this.formDescription) 
+      if (!this.formDescription)
         this.errors.push("Une description est requise.");
 
       if (!(this.formDescription.match(/^[a-zA-Z ]+$/))) this.errors.push("La description ne doit pas contenir de numéros ni de caractères spéciaux.")
@@ -153,6 +153,7 @@ export default {
 
         if (!this.picture) 
         this.errors.push("Une image est requise.");
+
 
       e.preventDefault();
     },
