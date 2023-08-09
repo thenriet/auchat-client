@@ -73,9 +73,12 @@
         <label for="FormControlPicture" class="form-label">Image</label>
         <input ref="picture" @change="selectFile" type="file"  class="form-control">  
       </div>
+      <div>
       <a class="btn-main" @click="checkForm" type="submit">
         Valider
       </a>
+      <p class= "error-msg" v-if="msg">{{ msg }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -91,6 +94,7 @@ export default {
       //   selectedCategory: null,
       token: this.$store.getters.isLoggedIn,
       data: [],
+      msg: "",
     };
   },
   methods: {
@@ -148,6 +152,7 @@ export default {
         this.$router.push("/products/");
       } catch (err) {
         console.log(err);
+        this.msg = err.response.data.error;
       }
     },
   },

@@ -147,4 +147,10 @@ export default {
   border: none;
   text-decoration: none;
 }
+
+.error-msg {
+  color: red;
+  font-weight: 500;
+  padding: 10px;
+}
 </style>
