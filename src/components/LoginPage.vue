@@ -38,17 +38,15 @@ export default {
       email: "",
       password: "",
       msg: "",
+      credentials: [],
     };
   },
   methods: {
     async login() {
       try {
-        const credentials = {
-          email: this.email,
-          password: this.password,
-        };
-        console.log(credentials);
-        const response = await AuthService.login(credentials);
+        this.credentials.push(this.email, this.password);
+        console.log(this.credentials);
+        const response = await AuthService.login(this.credentials);
         console.log(response);
         const token = response.token;
         const user = response.user;

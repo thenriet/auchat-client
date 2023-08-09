@@ -71,7 +71,7 @@
       </div>
       <div class="mb-3">
         <label for="FormControlPicture" class="form-label">Image</label>
-        <input type="text" class="form-control" id="image" />
+        <input ref="picture" @change="selectFile" type="file"  class="form-control">  
       </div>
       <a class="btn-main" @click="checkForm" type="submit">
         Valider
@@ -99,10 +99,18 @@ export default {
         let res = await ProductsDataService.get(id);
         let resJson = JSON.parse(JSON.stringify(res.data));
         this.currentProduct = resJson.data;
-        // console.log(this.currentProduct);
       } catch (err) {
         console.log(err);
       }
+    },
+    selectFile() {
+      if (this.$refs.picture) {
+        this.currentProduct.picture = this.$refs.picture.files[0];
+      }
+    },
+    createFile() {
+      const formData = new FormData();
+      console.log(formData.append("picture", this.currentProduct.picture));
     },
     checkForm: function () {
       try {
@@ -112,10 +120,11 @@ export default {
           this.currentProduct.price &&
           this.currentProduct.weight &&
           this.currentProduct.category &&
+          this.currentProduct.picture &&
           this.currentProduct.title.match(/[a-zA-Z]+\s/)
         ) {
           this.createData();
-          console.log("data reçu");
+          console.log("data reçu avec image");
         }
       } catch (err) {
         console.log(err);
@@ -127,9 +136,9 @@ export default {
         this.currentProduct.description,
         this.currentProduct.price,
         this.currentProduct.weight,
-        this.currentProduct.category
+        this.currentProduct.category,
+        this.currentProduct.picture
       );
-      console.log(this.token);
       this.updateProduct(this.currentProduct._id, this.data, this.token);
       this.data = [];
     },

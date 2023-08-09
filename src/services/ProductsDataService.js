@@ -40,15 +40,16 @@ class ProductsDataService {
         price: data[2],
         weight: data[3],
         category: data[4],
+        picture: data[5],
       },
       {
         headers: {
           authorization: "Bearer " + token,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
   }
-
   delete(id, token) {
     return http.delete(`/products/${id}`, {
       headers: {
