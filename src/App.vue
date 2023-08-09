@@ -45,7 +45,6 @@
       </div>
     </nav>
     <router-view></router-view>
-    <!-- <ProductsList></ProductsList> -->
     <footer class="footer">
       <li class="footer-item">Icônes : Freepik, Flaticon</li>
       <li class="footer-item">Fait par Ondine et Thomas</li>
@@ -54,8 +53,6 @@
 </template>
 
 <script>
-// import AuthService from "./services/AuthService";
-
 export default {
   name: "App",
   data() {
