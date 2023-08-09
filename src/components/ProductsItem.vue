@@ -43,7 +43,7 @@
               <h3>Supprimer le produit {{ currentProduct.title }} ?</h3>
             </div>
             <div class="btn-modal">
-              <a href="#" class="btn-card" @click="deleteProduct">Supprimer</a>
+              <a href="#" class="btn-main" @click="deleteProduct">Supprimer</a>
             </div>
             <b-button
               class="mt-3"
