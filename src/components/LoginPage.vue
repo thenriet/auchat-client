@@ -22,7 +22,7 @@
             @click="login"
             value="Valider"
           />
-          <p v-if="msg">{{ msg }}</p>
+          <p class="error-msg" v-if="msg">{{ msg }}</p>
         </div>
       </div>
     </form>
