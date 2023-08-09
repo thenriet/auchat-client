@@ -16,7 +16,7 @@
           style="height: 13rem"
           alt=""
         />
-        <div class="card-body">
+        <div class="card-body" style="min-height: 15rem">
           <h5 class="card-title">{{ product.title }}</h5>
           <p class="card-text">
             {{ product.description }}
