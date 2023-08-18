@@ -38,10 +38,15 @@
             <p class="card-text">
               {{ toy.description }}
             </p>
-            <p class="card-text">{{ toy.price }} euros</p>
-            <button class="btn-main" type="button">
-              <router-link :to="`/products/${toy._id}`">Voir</router-link>
-            </button>
+            <p class="card-text">{{ toy.price }} €</p>
+
+            <router-link
+              :to="`/products/${toy._id}`"
+              class="btn-main"
+              id="btn-voir"
+              type="button"
+              >Voir</router-link
+            >
           </div>
         </div>
       </div>
@@ -130,5 +135,19 @@ h2 {
   border-radius: 16px;
   background-color: #d9ddce;
   margin: 10px;
+}
+
+.card-body {
+  position: relative;
+}
+
+.card-text {
+  min-height: 60px;
+}
+
+#btn-voir {
+  position: absolute;
+  bottom: 40px;
+  left: 138px;
 }
 </style>

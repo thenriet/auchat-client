@@ -2,8 +2,7 @@
   <div class="container mt-3 w-50">
     <h1>Créer un nouveau produit</h1>
     <form  v-on:submit.prevent>
-      <div class="mb-3">
-        <label for="FormControlTitle" class="form-label">Nom du produit</label>
+      <div class="form-floating mb-3">
         <input
           v-model="formTitle"
           type="text"
@@ -12,11 +11,10 @@
           placeholder="Nom du produit"
           required
         />
+        <label for="FormControlTitle" class="form-label">Nom</label>
       </div>
-      <div class="mb-3">
-        <label for="FormControlDescription" class="form-label"
-          >Description du produit</label
-        >
+      <div class="form-floating mb-3">
+      
         <textarea
           style="white-space: pre-line"
           v-model="formDescription"
@@ -26,52 +24,55 @@
           placeholder="Description détaillée du produit"
           required
         ></textarea>
+        <label for="FormControlDescription" class="form-label"
+          >Description</label
+        >
       </div>
-      <div class="mb-3">
-        <label for="FormControlPrice" class="form-label">Prix du produit</label>
+      <div class="form-floating mb-3">
         <input
-          v-model.number="formPrice"
-          type="number"
-          class="form-control"
-          id="price"
-          placeholder="Prix du produit"
-          required
+        v-model.number="formPrice"
+        type="number"
+        class="form-control"
+        id="price"
+        placeholder="Prix du produit"
+        required
         />
+        <label for="FormControlPrice" class="form-label">Prix</label>
       </div>
-      <div class="mb-3">
+      <div class="form-floating mb-3">
+        <input
+        v-model.number="formWeight"
+        type="number"
+        class="form-control"
+        id="weight"
+        placeholder="Poids du produit"
+        oninput="this.value = this.valueAsNumber"
+        required
+        />
         <label for="FormControlWeight" class="form-label"
-          >Poids du produit</label
+          >Poids</label
         >
-        <input
-          v-model.number="formWeight"
-          type="number"
-          class="form-control"
-          id="weight"
-          placeholder="Poids du produit"
-          oninput="this.value = this.valueAsNumber"
-          required
-        />
       </div>
-      <div class="mb-3">
-        <label for="FormControlCategory" class="form-label"
-          >Catégorie du produit</label
-        >
+      <div class="form-floating mb-3">
         <select
-          v-model="selectedCategory"
-          name="categories"
-          id="FormControlCategory"
-          class="form-control"
-          required
+        v-model="selectedCategory"
+        name="categories"
+        id="FormControlCategory"
+        class="form-control"
+        required
         >
-          <option value="toys">Jouet</option>
-          <option value="food">Nourriture</option>
-          <option value="accessories">Accessoires</option>
-          <option value="utilities">Utilitaires</option>
-        </select>
+        <option value="toys">Jouet</option>
+        <option value="food">Nourriture</option>
+        <option value="accessories">Accessoires</option>
+        <option value="utilities">Utilitaires</option>
+      </select>
+      <label for="FormControlCategory" class="form-label"
+        >Catégorie</label
+      >
       </div>
-      <div class="mb-3">
-        <label for="FormControlPicture" class="form-label">Image</label>
+      <div class="form-floating mb-3">
         <input ref="picture" @change="selectFile" type="file"  class="form-control">      
+        <label for="FormControlPicture" class="form-label">Image</label>
       </div>
       <button @click="checkForm" type="submit" class="btn-main">
         Valider
@@ -174,16 +175,10 @@ export default {
       })
       this.$router.push("/products/");
     }
-    // createProduct: async function (data, token) {
-    //   try {
-    //     await ProductsDataService.createWithPicture(data, token);
-    //     this.$router.push("/products/");
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // },
   },
 };
 </script>
 
-<style></style>
+<style lang="scss">
+ @import '../scss/main.scss'
+</style>

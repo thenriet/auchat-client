@@ -1,0 +1,13 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+// for add and update forms
+
+$form-file-button-bg: white;
+$form-file-button-hover-bg: white;
+$form-floating-padding-y: 0.75rem;
+$form-floating-label-transform: scale(0.78) translateY(-0.5rem)
+  translateX(0.15rem);
+
+// for card
+$card-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+$card-height: null;

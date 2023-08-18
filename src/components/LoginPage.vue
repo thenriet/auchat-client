@@ -54,6 +54,7 @@ export default {
         this.$store.dispatch("login", { token, user });
         this.$router.push("/");
       } catch (error) {
+        this.credentials = [];
         console.log(error.response.data);
         this.msg = error.response.data.error;
       }
