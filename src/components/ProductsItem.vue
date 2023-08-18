@@ -20,19 +20,14 @@
         <p class="card-text">
           {{ currentProduct.description }}
         </p>
-        <p class="card-text">{{ currentProduct.price }} euros</p>
+        <p class="card-text">{{ currentProduct.price }} €</p>
         <p class="card-text">{{ currentProduct.weight }} kg</p>
-        <a href="#" class="btn-main">Ajouter au panier</a>
+
         <div class="card-admin" v-if="role">
-          <a href="#" class="btn-main" @click="showModal"
-            >Supprimer le produit</a
-          >
-          <div class="card-modif">
-            <a href="#" class="btn-main" type="button">
-              <router-link :to="`/update/${currentProduct._id}`"
-                >Modifier le produit
-              </router-link>
-            </a>
+          <div class="card-modif my-4">
+            <router-link :to="`/update/${currentProduct._id}`" class="btn-main"
+              >Modifier le produit
+            </router-link>
           </div>
           <b-modal
             ref="my-modal"
@@ -53,6 +48,9 @@
               >Fermer</b-button
             >
           </b-modal>
+          <bouton class="btn-main" @click="showModal"
+            >Supprimer le produit</bouton
+          >
         </div>
       </div>
     </div>
@@ -103,16 +101,18 @@ export default {
   },
 };
 </script>
-<style>
+
+<style lang="scss" scoped>
+@import "../scss/main.scss";
+
+a {
+  text-decoration: none;
+}
 .card {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
+  // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15) !important;
   border: none !important;
   border-radius: 16px !important;
-}
-
-.card-admin {
-  margin-top: 30px;
-  margin-bottom: 20px;
+  // max-height: 40rem !important;
 }
 
 .card-modif {
@@ -126,5 +126,11 @@ export default {
 .btn-modal {
   text-align: center;
   margin-top: 30px;
+}
+</style>
+
+<style scoped>
+.card-text {
+  min-height: 30px;
 }
 </style>
