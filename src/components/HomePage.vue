@@ -148,6 +148,6 @@ h2 {
 #btn-voir {
   position: absolute;
   bottom: 40px;
-  left: 138px;
+  left: 38%;
 }
 </style>
