@@ -72,7 +72,16 @@
       </div>
       <div>
         <a class="btn-main" @click="checkForm" type="submit"> Valider </a>
-        <p class="error-msg" v-if="msg">{{ msg }}</p>
+      </div>
+      <div class="m-3 text-danger">
+        <p v-if="errors.length">
+          <b>Veuillez corriger une ou plusieurs erreurs :</b>
+          <ul>
+            <li class= "error-list" v-for="(error, index) in errors" :key=index>
+           {{ error }}
+            </li>
+          </ul>
+        </p>
       </div>
     </form>
   </div>
@@ -89,7 +98,7 @@ export default {
       //   selectedCategory: null,
       token: this.$store.getters.isLoggedIn,
       data: [],
-      msg: "",
+      errors: [],
     };
   },
   methods: {
@@ -109,7 +118,7 @@ export default {
       ) {
         this.currentProduct.picture = this.$refs.picture.files[0];
       } else {
-        this.msg = "Merci de choisir une image au format valide";
+        this.errors.push("Merci de choisir une image au format valide");
       }
     },
     createFile() {
@@ -117,21 +126,22 @@ export default {
       console.log(formData.append("picture", this.currentProduct.picture));
     },
     checkForm: function () {
-      try {
-        if (
-          this.currentProduct.title &&
-          this.currentProduct.description &&
-          this.currentProduct.price &&
-          this.currentProduct.weight &&
-          this.currentProduct.category &&
-          this.currentProduct.picture &&
-          this.currentProduct.title.match(/[a-zA-Z]+\s/)
-        ) {
-          this.createData();
-          console.log("data reçu avec image");
-        }
-      } catch (err) {
-        console.log(err);
+      if (
+        this.currentProduct.title &&
+        this.currentProduct.description &&
+        this.currentProduct.price &&
+        this.currentProduct.weight &&
+        this.currentProduct.category &&
+        this.currentProduct.picture &&
+        this.currentProduct.title.match(/^[a-zA-Z ]+$/)
+      ) {
+        this.createData();
+        console.log("data reçu avec image");
+      } else {
+        if (!this.formTitle.match(/^[a-zA-Z ]+$/))
+          this.errors.push(
+            "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
+          );
       }
     },
     createData() {
@@ -152,7 +162,7 @@ export default {
         this.$router.push("/products/");
       } catch (err) {
         console.log(err);
-        this.msg = err.response.data.error;
+        this.errors.push = err.response.data.error;
       }
     },
   },
@@ -163,5 +173,9 @@ export default {
 @import "../scss/main.scss";
 a {
   text-decoration: none;
+}
+
+.error-list {
+  list-style: none;
 }
 </style>
