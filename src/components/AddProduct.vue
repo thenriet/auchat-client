@@ -112,11 +112,11 @@ export default {
   },
   methods: {
     selectFile() {
-      this.picture = this.$refs.picture.files[0]
+      this.picture = this.$refs.picture.files[0];
     },
     createFile() {
       const formData = new FormData();
-      console.log(formData.append('picture', this.picture)) 
+      console.log(formData.append("picture", this.picture));
     },
     checkForm: function (e) {
       if (
@@ -125,60 +125,69 @@ export default {
         this.formPrice &&
         this.formWeight &&
         this.selectedCategory &&
-        this.picture 
-        && (this.formTitle.match(/^[a-zA-Z ]+$/)) && (this.formDescription.match(/^[a-zA-Z ]+$/))
+        this.picture &&
+        this.formTitle.match(/^[a-zA-Z ]+$/) &&
+        this.formDescription.match(/^[a-zA-Z ]+$/)
       ) {
         this.createData();
       }
 
       this.errors = [];
 
-      if (!this.formTitle)
-        this.errors.push("Un titre est requis.");
-     
-      if (!(this.formTitle.match(/^[a-zA-Z ]+$/))) this.errors.push("Le titre ne doit pas contenir de numéros ni de caractères spéciaux.")
+      if (!this.formTitle) this.errors.push("Un titre est requis.");
+
+      if (!this.formTitle.match(/^[a-zA-Z ]+$/))
+        this.errors.push(
+          "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
+        );
 
       if (!this.formDescription)
         this.errors.push("Une description est requise.");
 
-      if (!(this.formDescription.match(/^[a-zA-Z ]+$/))) this.errors.push("La description ne doit pas contenir de numéros ni de caractères spéciaux.")
-      
-      if (!this.formPrice) 
-        this.errors.push("Un prix est requis.");
-      
-      if (!this.formWeight) 
-        this.errors.push("Un poids est requis.");
-      
-      if (!this.selectedCategory) 
+      if (!this.formDescription.match(/^[a-zA-Z ]+$/))
+        this.errors.push(
+          "La description ne doit pas contenir de numéros ni de caractères spéciaux."
+        );
+
+      if (!this.formPrice) this.errors.push("Un prix est requis.");
+
+      if (!this.formWeight) this.errors.push("Un poids est requis.");
+
+      if (!this.selectedCategory)
         this.errors.push("Une catégorie est requise.");
 
-        if (!this.picture) 
-        this.errors.push("Une image est requise.");
-
+      if (!this.picture) this.errors.push("Une image est requise.");
 
       e.preventDefault();
     },
     createData() {
       const formData = new FormData();
-      formData.append('title', this.formTitle);
-      formData.append('description', this.formDescription);
-      formData.append('price', this.formPrice);
-      formData.append('weight', this.formWeight);
-      formData.append('category', this.selectedCategory);
-      formData.append('picture', this.picture, 'picture.jpg');
+      formData.append("title", this.formTitle);
+      formData.append("description", this.formDescription);
+      formData.append("price", this.formPrice);
+      formData.append("weight", this.formWeight);
+      formData.append("category", this.selectedCategory);
+      formData.append("picture", this.picture, "picture.jpg");
 
       axios({
-      method: "post",
-      url: "http://localhost:8080/api/v1/products/",
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data", authorization: "Bearer " + this.token, },
-      })
-      this.$router.push("/products");
-    }
+        method: "post",
+        url: "http://localhost:8080/api/v1/products/",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          authorization: "Bearer " + this.token,
+        },
+      });
+      this.$router.push("/products/");
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
- @import '../scss/main.scss'
+@import "../scss/main.scss";
+
+.btn-main {
+  border-radius: 24px;
+}
 </style>

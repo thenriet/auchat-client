@@ -72,6 +72,21 @@ export default {
 };
 </script>
 <style scoped>
+.btn-list {
+  left: 33%;
+  position: absolute;
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  bottom: 40px;
+}
 a {
   text-decoration: none !important;
   color: white !important;
@@ -92,11 +107,5 @@ a {
 
 .card-img-top {
   height: 13rem;
-}
-
-#btn-details {
-  position: absolute;
-  bottom: 40px;
-  left: 122px;
 }
 </style>

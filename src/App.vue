@@ -37,11 +37,16 @@ export default {
   border: none;
   text-decoration: none;
   cursor: pointer;
+  bottom: 40px;
 }
 
 .error-msg {
   color: red;
   font-weight: 500;
   padding: 10px;
+}
+
+.card {
+  border: none !important;
 }
 </style>
