@@ -103,8 +103,13 @@ export default {
       }
     },
     selectFile() {
-      if (this.$refs.picture) {
+      if (
+        this.$refs.picture &&
+        this.$refs.picture.files[0]["type"] === "image/jpeg"
+      ) {
         this.currentProduct.picture = this.$refs.picture.files[0];
+      } else {
+        this.msg = "Merci de choisir une image au format valide";
       }
     },
     createFile() {
