@@ -10,7 +10,8 @@
           class="card-img-top"
           alt="picture of a cute cat"
         />
-        <img v-else 
+        <img
+          v-else
           :src="product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
@@ -25,6 +26,7 @@
           <router-link
             :to="`/products/${product._id}`"
             class="btn-main"
+            id="btn-details"
             type="button"
             >Détails</router-link
           >
@@ -41,20 +43,14 @@ export default {
     return {
       products: [],
       picture: null,
-      product: null,
       productsFetched: false,
     };
   },
   created() {
     this.getProducts();
   },
-  async beforeRouteUpdate(to, from) {
-    this.products = null;
-    try {
-      this.post = await this.getProducts();
-    } catch (error) {
-      this.error = error.toString();
-    }
+  onBeforeUpdate() {
+    this.getProducts();
   },
   methods: {
     getProducts: async function () {
