@@ -2,14 +2,14 @@
   <div class="d-flex justify-content-center flex-wrap list-container">
     <div v-for="(product, index) in products" :key="index">
       <div class="card m-3 shadow-sm">
-        <img
+        <!-- <img
           v-if="product.picture.includes(product._id)"
           :src="'http://localhost:8080/uploads/' + product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
-        />
+        /> -->
         <img
-          v-else
+          
           :src="product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
