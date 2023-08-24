@@ -43,7 +43,7 @@
 
               <router-link
                 :to="`/products/${toy._id}`"
-                class="btn-main"
+                class="btn-list"
                 type="button"
                 >Voir</router-link
               >
@@ -158,5 +158,22 @@ h2 {
   border: none;
   text-decoration: none;
   cursor: pointer;
+}
+
+.btn-list {
+  left: 33%;
+  position: absolute;
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 40px;
 }
 </style>

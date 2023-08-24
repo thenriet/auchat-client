@@ -37,8 +37,6 @@ export default {
   border: none;
   text-decoration: none;
   cursor: pointer;
-  left: 33%;
-  position: absolute;
   bottom: 40px;
 }
 
@@ -46,5 +44,9 @@ export default {
   color: red;
   font-weight: 500;
   padding: 10px;
+}
+
+.card {
+  border: none !important;
 }
 </style>

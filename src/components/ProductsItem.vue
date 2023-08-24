@@ -25,7 +25,10 @@
 
         <div class="card-admin" v-if="role">
           <div class="card-modif my-4">
-            <router-link :to="`/update/${currentProduct._id}`" class="btn-main"
+            <router-link
+              class="btn-card"
+              type="button"
+              :to="`/update/${currentProduct._id}`"
               >Modifier le produit
             </router-link>
           </div>
@@ -38,7 +41,7 @@
               <h3>Supprimer le produit {{ currentProduct.title }} ?</h3>
             </div>
             <div class="btn-modal">
-              <a href="#" class="btn-main" @click="deleteProduct">Supprimer</a>
+              <a href="#" class="btn-card" @click="deleteProduct">Supprimer</a>
             </div>
             <b-button
               class="mt-3"
@@ -48,7 +51,7 @@
               >Fermer</b-button
             >
           </b-modal>
-          <bouton class="btn-main" @click="showModal"
+          <bouton class="btn-card" @click="showModal"
             >Supprimer le produit</bouton
           >
         </div>
@@ -132,5 +135,19 @@ a {
 <style scoped>
 .card-text {
   min-height: 30px;
+}
+
+.btn-card {
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  left: 33%;
 }
 </style>

@@ -2,13 +2,13 @@
   <div class="d-flex justify-content-center flex-wrap list-container">
     <div v-for="(product, index) in products" :key="index">
       <div class="card m-3 shadow-sm">
-        <!-- <img
+        <img
           v-if="product.picture.includes(product._id)"
           :src="'http://localhost:8080/uploads/' + product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
-        /> -->
-        <img
+        />
+        <img v-else 
           :src="product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
@@ -53,6 +53,21 @@ export default {
 };
 </script>
 <style scoped>
+.btn-list {
+  left: 33%;
+  position: absolute;
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  bottom: 40px;
+}
 a {
   text-decoration: none !important;
   color: white !important;
