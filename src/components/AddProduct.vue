@@ -82,7 +82,7 @@
         <p v-if="errors.length">
           <b>Veuillez corriger une ou plusieurs erreurs :</b>
           <ul>
-            <li v-for="(error, index) in errors" :key=index>
+            <li class= "error-list" v-for="(error, index) in errors" :key=index>
            {{ error }}
             </li>
           </ul>
@@ -112,7 +112,11 @@ export default {
   },
   methods: {
     selectFile() {
-      this.picture = this.$refs.picture.files[0];
+      if (this.$refs.picture.files[0]["type"] === "image/jpeg") {
+        this.picture = this.$refs.picture.files[0];
+      } else {
+        this.errors.push("Merci de choisir une image au format valide");
+      }
     },
     createFile() {
       const formData = new FormData();
@@ -131,9 +135,6 @@ export default {
       ) {
         this.createData();
       }
-
-      this.errors = [];
-
       if (!this.formTitle) this.errors.push("Un titre est requis.");
 
       if (!this.formTitle.match(/^[a-zA-Z ]+$/))
@@ -189,5 +190,9 @@ export default {
 
 .btn-main {
   border-radius: 24px;
+}
+
+.error-list {
+  list-style: none;
 }
 </style>
