@@ -9,7 +9,6 @@
           alt="picture of a cute cat"
         /> -->
         <img
-          
           :src="product.picture"
           class="card-img-top"
           alt="picture of a cute cat"
@@ -24,7 +23,6 @@
           <router-link
             :to="`/products/${product._id}`"
             class="btn-main"
-            id="btn-details"
             type="button"
             >Détails</router-link
           >
@@ -75,11 +73,5 @@ a {
 
 .card-img-top {
   height: 13rem;
-}
-
-#btn-details {
-  position: absolute;
-  bottom: 40px;
-  left: 122px;
 }
 </style>

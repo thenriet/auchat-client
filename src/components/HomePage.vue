@@ -4,7 +4,7 @@
       <div class="main-card">
         <h1>Bienvenue {{ getUsername }}</h1>
         <router-link to="/products"
-          ><button class="btn-main">Voir le catalogue</button></router-link
+          ><button class="btn-home">Voir le catalogue</button></router-link
         >
       </div>
     </div>
@@ -18,7 +18,7 @@
     <h3>Les jouets</h3>
     <div class="d-flex justify-content-center flex-wrap">
       <div v-for="(toy, index) in toys" :key="index">
-        <div class="card m-3" style="width: 18rem">
+        <div class="card m-3 shadow-sm" style="width: 18rem">
           <img
             v-if="toy.picture.includes(toy._id)"
             :src="'http://localhost:8080/uploads/' + toy.picture"
@@ -38,15 +38,16 @@
             <p class="card-text">
               {{ toy.description }}
             </p>
-            <p class="card-text">{{ toy.price }} €</p>
+            <p class="card-text">
+              {{ toy.price }} €
 
-            <router-link
-              :to="`/products/${toy._id}`"
-              class="btn-main"
-              id="btn-voir"
-              type="button"
-              >Voir</router-link
-            >
+              <router-link
+                :to="`/products/${toy._id}`"
+                class="btn-main"
+                type="button"
+                >Voir</router-link
+              >
+            </p>
           </div>
         </div>
       </div>
@@ -139,15 +140,23 @@ h2 {
 
 .card-body {
   position: relative;
+  min-height: 15rem;
 }
 
 .card-text {
   min-height: 60px;
 }
 
-#btn-voir {
-  position: absolute;
-  bottom: 40px;
-  left: 38%;
+.btn-home {
+  background-color: #ffae8b;
+  border-radius: 24px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 28px;
+  padding-right: 28px;
+  color: white !important;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>
