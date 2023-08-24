@@ -43,20 +43,14 @@ export default {
     return {
       products: [],
       picture: null,
-      product: null,
       productsFetched: false,
     };
   },
   created() {
     this.getProducts();
   },
-  async beforeRouteUpdate(to, from) {
-    this.products = null;
-    try {
-      this.post = await this.getProducts();
-    } catch (error) {
-      this.error = error.toString();
-    }
+  onBeforeUpdate() {
+    this.getProducts();
   },
   methods: {
     getProducts: async function () {

@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex justify-content-center">
-    <div class="card m-3 shadow-sm" style="width: 18rem">
+    <div class="card m-3 shadow-sm" style="width: 18rem" v-if="productsFetched">
       <img
         v-if="currentProduct.picture.includes(currentProduct._id)"
         :src="'http://localhost:8080/uploads/' + currentProduct.picture"
@@ -51,9 +51,9 @@
               >Fermer</b-button
             >
           </b-modal>
-          <bouton class="btn-card" @click="showModal"
-            >Supprimer le produit</bouton
-          >
+          <button class="btn-card" @click="showModal">
+            Supprimer le produit
+          </button>
         </div>
       </div>
     </div>
@@ -66,22 +66,24 @@ export default {
   name: "productsItem",
   data() {
     return {
-      currentProduct: this.getProductAsync(this.$route.params.id),
+      currentProduct: null,
+      productsFetched: false,
       role: null,
       token: this.$store.getters.isLoggedIn,
     };
   },
-  async created() {
+  created() {
     if (this.$store.getters.getUser.role === "admin") {
       this.role = this.$store.getters.getUser.role;
     }
+    this.getProductAsync(this.$route.params.id);
   },
   methods: {
     getProductAsync: async function (id) {
       try {
         let res = await ProductsDataService.get(id);
-        let resJson = JSON.parse(JSON.stringify(res.data));
-        this.currentProduct = resJson.data;
+        this.currentProduct = res.data.data;
+        this.productsFetched = true;
       } catch (err) {
         console.log(err);
       }

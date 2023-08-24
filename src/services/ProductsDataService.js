@@ -1,4 +1,5 @@
 import http from "../http-common";
+import axios from "axios";
 
 class ProductsDataService {
   getAll() {
@@ -14,21 +15,15 @@ class ProductsDataService {
   }
 
   create(data, token) {
-    // for (let [name, value] of data) {
-    //   console.log(`${name} = ${value}`);
-    // }
-    return http.post(
-      "/products",
-      {
-        data: data,
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/api/v1/products/",
+      data: data,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: "Bearer " + token,
       },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: "Bearer " + token,
-        },
-      }
-    );
+    });
   }
 
   update(id, data, token) {

@@ -13,8 +13,7 @@
         />
         <label for="FormControlTitle" class="form-label">Nom</label>
       </div>
-      <div class="form-floating mb-3">
-      
+      <div class="form-floating mb-3">    
         <textarea
           style="white-space: pre-line"
           v-model="formDescription"
@@ -92,8 +91,7 @@
 </template>
 
 <script>
-// import ProductsDataService from "@/services/ProductsDataService";
-import axios from "axios";
+import ProductsDataService from "@/services/ProductsDataService";
 
 export default {
   name: "AddProduct",
@@ -123,45 +121,26 @@ export default {
       console.log(formData.append("picture", this.picture));
     },
     checkForm: function (e) {
-      if (
-        this.formTitle &&
-        this.formDescription &&
-        this.formPrice &&
-        this.formWeight &&
-        this.selectedCategory &&
-        this.picture &&
-        this.formTitle.match(/^[a-zA-Z ]+$/) &&
-        this.formDescription.match(/^[a-zA-Z ]+$/)
-      ) {
-        this.createData();
-      }
+      this.errors = [];
       if (!this.formTitle) this.errors.push("Un titre est requis.");
-
       if (!this.formTitle.match(/^[a-zA-Z ]+$/))
         this.errors.push(
           "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
         );
-
       if (!this.formDescription)
         this.errors.push("Une description est requise.");
-
       if (!this.formDescription.match(/^[a-zA-Z ]+$/))
         this.errors.push(
           "La description ne doit pas contenir de numéros ni de caractères spéciaux."
         );
-
       if (!this.formPrice) this.errors.push("Un prix est requis.");
-
       if (!this.formWeight) this.errors.push("Un poids est requis.");
-
       if (!this.selectedCategory)
         this.errors.push("Une catégorie est requise.");
-
       if (!this.picture) this.errors.push("Une image est requise.");
-
-      e.preventDefault();
+      this.errors.length > 0 ? e.preventDefault() : this.createData() ;
     },
-    createData() {
+    async createData() {
       const formData = new FormData();
       formData.append("title", this.formTitle);
       formData.append("description", this.formDescription);
@@ -170,16 +149,9 @@ export default {
       formData.append("category", this.selectedCategory);
       formData.append("picture", this.picture, "picture.jpg");
 
-      axios({
-        method: "post",
-        url: "http://localhost:8080/api/v1/products/",
-        data: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          authorization: "Bearer " + this.token,
-        },
-      });
-      this.$router.push("/products/");
+      await ProductsDataService.create(formData, this.token)
+
+      this.$router.push("/products");
     },
   },
 };
