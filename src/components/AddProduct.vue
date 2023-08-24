@@ -173,7 +173,7 @@ export default {
       data: formData,
       headers: { "Content-Type": "multipart/form-data", authorization: "Bearer " + this.token, },
       })
-      this.$router.push("/products/");
+      this.$router.push("/products");
     }
   },
 };

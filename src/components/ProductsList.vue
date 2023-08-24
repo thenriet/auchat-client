@@ -1,6 +1,8 @@
 <template lang="">
   <div class="d-flex justify-content-center flex-wrap list-container">
-    <div v-for="(product, index) in products" :key="index">
+    <div v-if="!productsFetched" class="loading">Veuillez patienter</div>
+
+    <div v-for="product in products" :key="product._id">
       <div class="card m-3 shadow-sm">
         <img
           v-if="product.picture.includes(product._id)"
@@ -38,18 +40,33 @@ import ProductsDataService from "../services/ProductsDataService";
 
 export default {
   data: () => {
-    return { products: [], picture: null, product: null };
+    return {
+      products: [],
+      picture: null,
+      product: null,
+      productsFetched: false,
+    };
   },
-  created: function () {
+  created() {
     this.getProducts();
   },
-  updated: function () {
-    this.getProducts();
+  async beforeRouteUpdate(to, from) {
+    this.products = null;
+    try {
+      this.post = await this.getProducts();
+    } catch (error) {
+      this.error = error.toString();
+    }
   },
   methods: {
     getProducts: async function () {
-      let res = await ProductsDataService.getAll();
-      this.products = res.data.data;
+      try {
+        let res = await ProductsDataService.getAll();
+        this.products = res.data.data;
+        this.productsFetched = true;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };
