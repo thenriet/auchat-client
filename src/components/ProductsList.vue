@@ -1,7 +1,6 @@
 <template lang="">
   <div class="d-flex justify-content-center flex-wrap list-container">
     <div v-if="!productsFetched" class="loading">Veuillez patienter</div>
-
     <div v-for="product in products" :key="product._id">
       <div class="card m-3 shadow-sm">
         <img
