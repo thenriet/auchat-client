@@ -16,40 +16,20 @@
       <div class="card-home-left"><h2>Hygiène</h2></div>
     </div>
     <h3>Les jouets</h3>
+    <div v-if="!toysFetched" class="loading">Veuillez patienter</div>
+    <div v-if="!toysFetched" class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div class="d-flex justify-content-center flex-wrap">
-      <div v-for="(toy, index) in toys" :key="index">
-        <div class="card m-3 shadow-sm" style="width: 18rem">
-          <img
-            v-if="toy.picture.includes(toy._id)"
-            :src="'http://localhost:8080/uploads/' + toy.picture"
-            class="card-img-top"
-            style="height: 13rem"
-            alt=""
-          />
-          <img
-            v-else
-            :src="toy.picture"
-            class="card-img-top"
-            style="height: 13rem"
-            alt=""
-          />
-          <div class="card-body" style="min-height: 15rem">
-            <h5 class="card-title">{{ toy.title }}</h5>
-            <p class="card-text">
-              {{ toy.description }}
-            </p>
-            <p class="card-text">
-              {{ toy.price }} €
-
-              <router-link
-                :to="`/products/${toy._id}`"
-                class="btn-list"
-                type="button"
-                >Voir</router-link
-              >
-            </p>
-          </div>
-        </div>
+      <div v-for="product in products" :key="product._id">
+        <ProductsItem :product="product"></ProductsItem>
       </div>
     </div>
   </div>
@@ -57,15 +37,17 @@
 
 <script>
 import ProductsDataService from "../services/ProductsDataService";
+import ProductsItem from "./ProductsItem.vue";
 
 export default {
   name: "HomePage",
   data() {
     return {
-      toys: [],
+      products: [],
+      toysFetched: false,
     };
   },
-  components: {},
+  components: { ProductsItem },
   mounted: function () {
     this.getToys();
   },
@@ -77,7 +59,8 @@ export default {
   methods: {
     getToys: async function () {
       let res = await ProductsDataService.getAllToys();
-      this.toys = res.data.data;
+      this.products = res.data.data;
+      this.toysFetched = true;
     },
   },
 };
