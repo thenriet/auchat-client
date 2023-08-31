@@ -72,7 +72,16 @@
       </div>
       <div>
         <a class="btn-main" @click="checkForm" type="submit"> Valider </a>
-        <p class="error-msg" v-if="msg">{{ msg }}</p>
+      </div>
+      <div class="m-3 text-danger">
+        <p v-if="errors.length">
+          <b>Veuillez corriger une ou plusieurs erreurs :</b>
+          <ul>
+            <li class= "error-list" v-for="(error, index) in errors" :key=index>
+           {{ error }}
+            </li>
+          </ul>
+        </p>
       </div>
     </form>
     <div class="m-3 text-danger">
@@ -119,13 +128,14 @@ export default {
       ) {
         this.currentProduct.picture = this.$refs.picture.files[0];
       } else {
-        this.msg = "Merci de choisir une image au format valide";
+        this.errors.push("Merci de choisir une image au format valide");
       }
     },
     createFile() {
       const formData = new FormData();
       console.log(formData.append("picture", this.currentProduct.picture));
     },
+
     checkForm: function (e) {
       this.errors = [];
       try {
@@ -168,7 +178,7 @@ export default {
         this.$router.push("/products/");
       } catch (err) {
         console.log(err);
-        this.msg = err.response.data.error;
+        this.errors.push = err.response.data.error;
       }
     },
   },
@@ -179,5 +189,9 @@ export default {
 @import "../scss/main.scss";
 a {
   text-decoration: none;
+}
+
+.error-list {
+  list-style: none;
 }
 </style>
