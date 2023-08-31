@@ -78,15 +78,15 @@
       </button>
     </form>
     <div class="m-3 text-danger">
-        <p v-if="errors.length">
-          <b>Veuillez corriger une ou plusieurs erreurs :</b>
-          <ul>
-            <li class= "error-list" v-for="(error, index) in errors" :key=index>
+      <p v-if="errors.length">
+        <b>Veuillez corriger une ou plusieurs erreurs :</b>
+        <ul>
+          <li class= "error-list" v-for="(error, index) in errors" :key=index>
            {{ error }}
-            </li>
-          </ul>
-        </p>
-      </div>
+          </li>
+        </ul>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -123,13 +123,13 @@ export default {
     checkForm: function (e) {
       this.errors = [];
       if (!this.formTitle) this.errors.push("Un titre est requis.");
-      if (!this.formTitle.match(/^[a-zA-Z ]+$/))
+      if (!this.formTitle.match(/^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i))
         this.errors.push(
           "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
         );
       if (!this.formDescription)
         this.errors.push("Une description est requise.");
-      if (!this.formDescription.match(/^[a-zA-Z ]+$/))
+      if (!this.formDescription.match(/^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i))
         this.errors.push(
           "La description ne doit pas contenir de numéros ni de caractères spéciaux."
         );

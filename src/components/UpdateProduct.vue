@@ -84,6 +84,16 @@
         </p>
       </div>
     </form>
+    <div class="m-3 text-danger">
+      <p v-if="errors.length">
+        <b>Veuillez corriger une ou plusieurs erreurs :</b>
+        <ul>
+          <li class= "error-list" v-for="(error, index) in errors" :key=index>
+           {{ error }}
+          </li>
+        </ul>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -94,15 +104,15 @@ export default {
   name: "UpdateProduct",
   data() {
     return {
-      currentProduct: this.getProductAsync(this.$route.params.id),
-      //   selectedCategory: null,
+      currentProduct: this.getProduct(this.$route.params.id),
       token: this.$store.getters.isLoggedIn,
       data: [],
       errors: [],
+      msg: "",
     };
   },
   methods: {
-    getProductAsync: async function (id) {
+    getProduct: async function (id) {
       try {
         let res = await ProductsDataService.get(id);
         let resJson = JSON.parse(JSON.stringify(res.data));
@@ -125,23 +135,29 @@ export default {
       const formData = new FormData();
       console.log(formData.append("picture", this.currentProduct.picture));
     },
-    checkForm: function () {
-      if (
-        this.currentProduct.title &&
-        this.currentProduct.description &&
-        this.currentProduct.price &&
-        this.currentProduct.weight &&
-        this.currentProduct.category &&
-        this.currentProduct.picture &&
-        this.currentProduct.title.match(/^[a-zA-Z ]+$/)
-      ) {
-        this.createData();
-        console.log("data reçu avec image");
-      } else {
-        if (!this.formTitle.match(/^[a-zA-Z ]+$/))
-          this.errors.push(
-            "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
-          );
+
+    checkForm: function (e) {
+      this.errors = [];
+      try {
+        if (!this.currentProduct.title) this.errors.push("Un titre est requis.");
+        if (!this.currentProduct.title.match(/^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i))
+        this.errors.push(
+          "Le titre ne doit pas contenir de numéros ni de caractères spéciaux."
+        );
+      if (!this.currentProduct.description)
+        this.errors.push("Une description est requise.");
+      if (!this.currentProduct.description.match(/^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i))
+        this.errors.push(
+          "La description ne doit pas contenir de numéros ni de caractères spéciaux."
+        );
+      if (!this.currentProduct.price) this.errors.push("Un prix est requis.");
+      if (!this.currentProduct.weight) this.errors.push("Un poids est requis.");
+      if (!this.currentProduct.category)
+        this.errors.push("Une catégorie est requise.");
+      if (!this.currentProduct.picture) this.errors.push("Une image est requise.");
+        this.errors.length > 0 ? e.preventDefault() : this.createData() ;
+      } catch (err) {
+        console.log(err);
       }
     },
     createData() {
