@@ -24,6 +24,7 @@ export default new Router({
       path: "/products/:id",
       name: "products-item",
       component: ProductsItem,
+      props: true,
     },
     {
       path: "/add",

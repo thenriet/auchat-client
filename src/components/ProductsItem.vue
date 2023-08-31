@@ -2,19 +2,78 @@
   <div class="container d-flex justify-content-center">
     <div class="card m-3 shadow-sm" style="width: 18rem" v-if="productsFetched">
       <img
+        v-if="product.picture.includes(product._id)"
+        :src="'http://localhost:8080/uploads/' + product.picture"
+        class="card-img-top"
+        alt=""
+      />
+      <img v-else :src="product.picture" class="card-img-top" alt="" />
+      <div class="card-body">
+        <h5 class="card-title">{{ product.title }}</h5>
+        <p class="card-text">
+          {{ product.description }}
+        </p>
+        <p class="card-text">{{ product.price }} €</p>
+        <p class="card-text">{{ product.weight }} kg</p>
+
+        <div class="card-admin" v-if="role && routeName === 'products-item'">
+          <div class="card-modif my-4">
+            <router-link
+              class="btn-card"
+              type="button"
+              :to="`/update/${product._id}`"
+              >Modifier le produit
+            </router-link>
+          </div>
+          <b-modal
+            ref="my-modal"
+            hide-footer
+            title="Confirmation de suppression"
+          >
+            <div class="d-block text-center">
+              <h3>Supprimer le produit {{ product.title }} ?</h3>
+            </div>
+            <div class="btn-modal">
+              <a href="#" class="btn-card" @click="deleteProduct">Supprimer</a>
+            </div>
+            <b-button
+              class="mt-3"
+              variant="outline-danger"
+              block
+              @click="hideModal"
+              >Fermer</b-button
+            >
+          </b-modal>
+          <button class="btn-card" @click="showModal">
+            Supprimer le produit
+          </button>
+        </div>
+        <div v-if="routeName !== 'products-item'">
+          <router-link
+            :to="{
+              name: 'products-item',
+              params: { product: product, id: product._id },
+            }"
+            class="btn-main"
+            id="btn-details"
+            type="button"
+            >Détails</router-link
+          >
+        </div>
+      </div>
+    </div>
+    <div
+      class="card m-3 shadow-sm"
+      style="width: 18rem"
+      v-if="productsFetchedByApi"
+    >
+      <img
         v-if="currentProduct.picture.includes(currentProduct._id)"
         :src="'http://localhost:8080/uploads/' + currentProduct.picture"
         class="card-img-top"
-        style="max-height: 15rem"
         alt=""
       />
-      <img
-        v-else
-        :src="currentProduct.picture"
-        class="card-img-top"
-        style="height: 13rem"
-        alt=""
-      />
+      <img v-else :src="currentProduct.picture" class="card-img-top" alt="" />
       <div class="card-body">
         <h5 class="card-title">{{ currentProduct.title }}</h5>
         <p class="card-text">
@@ -23,7 +82,7 @@
         <p class="card-text">{{ currentProduct.price }} €</p>
         <p class="card-text">{{ currentProduct.weight }} kg</p>
 
-        <div class="card-admin" v-if="role">
+        <div class="card-admin" v-if="role && routeName === 'products-item'">
           <div class="card-modif my-4">
             <router-link
               class="btn-card"
@@ -66,24 +125,33 @@ export default {
   name: "productsItem",
   data() {
     return {
-      currentProduct: null,
       productsFetched: false,
+      productsFetchedByApi: false,
+      currentProduct: this.product,
       role: null,
       token: this.$store.getters.isLoggedIn,
     };
   },
+  props: ["product"],
   created() {
     if (this.$store.getters.getUser.role === "admin") {
       this.role = this.$store.getters.getUser.role;
     }
-    this.getProductAsync(this.$route.params.id);
+    this.product
+      ? (this.productsFetched = true)
+      : this.getProduct(this.$route.params.id);
+  },
+  computed: {
+    routeName() {
+      return this.$route.name;
+    },
   },
   methods: {
-    getProductAsync: async function (id) {
+    getProduct: async function (id) {
       try {
         let res = await ProductsDataService.get(id);
         this.currentProduct = res.data.data;
-        this.productsFetched = true;
+        this.productsFetchedByApi = true;
       } catch (err) {
         console.log(err);
       }
@@ -96,7 +164,7 @@ export default {
     },
     deleteProduct: async function (id) {
       try {
-        id = this.currentProduct._id;
+        id = this.product._id;
         await ProductsDataService.delete(id, this.token);
         this.$router.push("/products");
       } catch (err) {
@@ -132,13 +200,17 @@ a {
   text-align: center;
   margin-top: 30px;
 }
-</style>
 
-<style scoped>
+.card-img-top {
+  max-height: 12rem;
+}
+
 .card-text {
   min-height: 30px;
 }
+</style>
 
+<style scoped>
 .btn-card {
   background-color: #ffae8b;
   border-radius: 24px;
@@ -151,5 +223,9 @@ a {
   text-decoration: none;
   cursor: pointer;
   left: 33%;
+}
+
+p:nth-of-type(1) {
+  min-height: 60px;
 }
 </style>

@@ -1,42 +1,26 @@
 <template lang="">
   <div class="d-flex justify-content-center flex-wrap list-container">
-    <div v-if="!productsFetched" class="loading">Veuillez patienter</div>
-
-    <div v-for="product in products" :key="product._id">
-      <div class="card m-3 shadow-sm">
-        <img
-          v-if="product.picture.includes(product._id)"
-          :src="'http://localhost:8080/uploads/' + product.picture"
-          class="card-img-top"
-          alt="picture of a cute cat"
-        />
-        <img
-          v-else
-          :src="product.picture"
-          class="card-img-top"
-          alt="picture of a cute cat"
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{ product.title }}</h5>
-          <p class="card-text">
-            {{ product.description }}
-          </p>
-          <p class="card-text">{{ product.price }} €</p>
-
-          <router-link
-            :to="`/products/${product._id}`"
-            class="btn-main"
-            id="btn-details"
-            type="button"
-            >Détails</router-link
-          >
-        </div>
+    <div v-if="!productsFetched" class="loading">
+      <p>Veuillez patienter</p>
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
+    </div>
+    <div v-for="product in products" :key="product._id">
+      <ProductsItem :product="product"></ProductsItem>
     </div>
   </div>
 </template>
 <script>
 import ProductsDataService from "../services/ProductsDataService";
+import ProductsItem from "./ProductsItem.vue";
 
 export default {
   data: () => {
@@ -45,6 +29,9 @@ export default {
       picture: null,
       productsFetched: false,
     };
+  },
+  components: {
+    ProductsItem,
   },
   created() {
     this.getProducts();
@@ -97,9 +84,5 @@ a {
 .card-body {
   position: relative;
   min-height: 15rem;
-}
-
-.card-img-top {
-  height: 13rem;
 }
 </style>
