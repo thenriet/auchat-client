@@ -15,7 +15,11 @@
         </p>
         <p class="card-text">{{ product.price }} €</p>
         <p class="card-text">{{ product.weight }} kg</p>
-
+        <div v-if="routeName === 'products-item'">
+          <a href="#" @click="addToCart(product)" class="btn-card">
+            Ajouter au panier
+          </a>
+        </div>
         <div class="card-admin" v-if="role && routeName === 'products-item'">
           <div class="card-modif my-4">
             <router-link
@@ -59,6 +63,11 @@
             type="button"
             >Détails</router-link
           >
+          <div class="add-cart">
+            <a href="#" @click="addToCart(product)" class="btn-card">
+              Ajouter au panier
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -81,7 +90,6 @@
         </p>
         <p class="card-text">{{ currentProduct.price }} €</p>
         <p class="card-text">{{ currentProduct.weight }} kg</p>
-
         <div class="card-admin" v-if="role && routeName === 'products-item'">
           <div class="card-modif my-4">
             <router-link
@@ -120,6 +128,7 @@
 </template>
 <script>
 import ProductsDataService from "@/services/ProductsDataService";
+// import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "productsItem",
@@ -142,10 +151,15 @@ export default {
       : this.getProduct(this.$route.params.id);
   },
   computed: {
+    // ...mapGetters({
+    //   products: "allProducts",
+    //   length: "getNumberOfProducts",
+    // }),
     routeName() {
       return this.$route.name;
     },
   },
+
   methods: {
     getProduct: async function (id) {
       try {
@@ -155,6 +169,9 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    addToCart(product) {
+      this.$store.commit("addToCart", product);
     },
     showModal() {
       this.$refs["my-modal"].show();
@@ -208,9 +225,7 @@ a {
 .card-text {
   min-height: 30px;
 }
-</style>
 
-<style scoped>
 .btn-card {
   background-color: #ffae8b;
   border-radius: 24px;
@@ -227,5 +242,9 @@ a {
 
 p:nth-of-type(1) {
   min-height: 60px;
+}
+
+.add-cart {
+  padding: 20px;
 }
 </style>
