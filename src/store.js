@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Axios from "axios";
-import * as types from "./mutation-types";
 import ProductsDataService from "./services/ProductsDataService";
 import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
@@ -33,8 +32,6 @@ export default new Vuex.Store({
       state.products ? state.products.length : 0,
     cartProducts: (state) => {
       return state.added;
-      // // console.log(state.added);
-      // return state.added, quantity;
     },
   },
   mutations: {
@@ -48,31 +45,12 @@ export default new Vuex.Store({
       Object.assign(state, getDefaultState());
     },
     addToCart(state, payload) {
-      // console.log(payload);
-      // const record = state.added.find((payload) => payload === payload);
-      // if (!record) {
-      //   state.added.push({
-      //     payload,
-      //     quantity: 1,
-      //   });
-      // } else {
-      //   record.quantity++;
-      // }
       state.added.push(payload);
     },
     removeFromCart(state, p) {
       state.added.splice(p, 1);
     },
-    // [types.ADD_TO_CART](state, { id }) {
-    //   const record = state.added.find((p) => p.id === id);
-    //   if (!record) {
-    //     state.added.push({
-    //       id,
-    //       quantity: 1,
-    //     });
-    //   } else {
-    //     record.quantity++;
-    //   }
+
     setProducts(state, payload) {
       state.products = payload;
     },
@@ -95,11 +73,6 @@ export default new Vuex.Store({
     },
     logout: ({ commit }) => {
       commit("RESET", "");
-      // },
-      // addToCart({ commit }, product) {
-      //   commit(types.ADD_TO_CART, {
-      //     id: product._id,
-      //   });
     },
   },
 });
