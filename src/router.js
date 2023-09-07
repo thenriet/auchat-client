@@ -5,6 +5,7 @@ import ProductsList from "./components/ProductsList";
 import AddProduct from "./components/AddProduct";
 import LoginPage from "./components/LoginPage";
 import UpdateProduct from "./components/UpdateProduct";
+import Cart from "./components/Cart";
 import Store from "./store";
 
 export default new Router({
@@ -46,5 +47,6 @@ export default new Router({
       name: "login",
       component: LoginPage,
     },
+    { path: "/cart", component: Cart },
   ],
 });

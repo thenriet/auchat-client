@@ -43,6 +43,14 @@
           />
         </li>
       </div>
+
+      <div class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link to="/cart" class="nav-link"
+            >Mon Panier : <span> ({{ itemsInCart }})</span></router-link
+          >
+        </li>
+      </div>
     </nav>
   </div>
 </template>
@@ -56,9 +64,16 @@ export default {
   async created() {
     this.username = this.$store.getters.getUser.name;
   },
+  // mounted() {
+  //   this.$store.dispatch("getProducts");
+  // },
   computed: {
     getRole() {
       return this.$store.getters.getRole;
+    },
+    itemsInCart() {
+      let cart = this.$store.getters.cartProducts;
+      return cart.length;
     },
   },
   methods: {

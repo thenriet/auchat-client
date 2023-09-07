@@ -21,7 +21,6 @@
 <script>
 import ProductsDataService from "../services/ProductsDataService";
 import ProductsItem from "./ProductsItem.vue";
-
 export default {
   data: () => {
     return {
